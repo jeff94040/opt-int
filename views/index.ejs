@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OptInt Web App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <fieldset>
+    <legend>Main menu</legend>
+    <table>
+      <tr>
+        <td>Select from the following: </td>
+        <td>
+          <select name="main-menu">
+            <option value="1" disabled>1.  DATA FILE PROCESSING (LIST, CHANGE)</option>
+            <option value="2">2.  KELRAM MODULE - FIRST PASS</option>
+            <option value="3">3.  OPTRAM MODULE</option>
+            <option value="4" disabled>4.  BODYS MODULE</option>
+            <option value="5">5.  KELRAM MODULE - SECOND PASS</option>
+            <option value="6" disabled>6.  LIST DATA DISKETTE DIRECTORY</option>
+            <option value="7" disabled>7.  MAKE SCREEN PLOT</option>
+            <option value="8" disabled>8.  MAKE PRINTER PLOT</option>
+            <option value="0">0.  TERMINATE SESSION</option>
+          </select>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset>
+    <legend>Input files</legend>
+    <form enctype="multipart/form-data" action="/" method='post'>
+      <table id="files-table">
+        <tr>
+          <td>open strut. geom. (unit 30): </td>
+          <td>testit.stg</td>
+          <td> | <a href='/view/testit.stg'>view</a></td>
+          <td> | <a href='/download/testit.stg'>download</a></td>
+          <td> | <%=stg.age%></td>
+          <td> | <input type='file' name='stg' accept='.stg'></td>
+          <td class="successful"><%=stg.uploaded ? ' | upload successful' : ''%></td>
+        </tr>
+        <tr>
+          <td>base data: </td>
+          <td>testit.xvf</td>
+          <td> | <a href='/view/testit.xvf'>view</a></td>
+          <td> | <a href='/download/testit.xvf'>download</a></td>
+          <td> | <%=xvf.age%></td>
+          <td> | <input type='file' name='xvf' accept='.xvf'></td>
+          <td class='successful'><%=xvf.uploaded ? ' | upload successful' : ''%></td>
+        </tr>
+      </table>
+      <button>Upload</button>
+    </form>    
+  </fieldset>
+  <fieldset>
+    <legend>Edit / confirm basic input vector data within testit.xvf</legend>
+    <form action='/' method='post'>
+      <input type="hidden" name="menu" value="2">
+      <table>
+        <tr><td>Vector data description</td><td>Current value</td><td>New value (decimal notation)</td></tr>
+        <tr><td>1. number of hulls: </td><td>[<%=xvf.content[0]%>]</td><td><input name="xvf" placeholder="e.g. 1"></td></tr>
+        <tr><td>2. y coordinate of hull centerline: </td><td>[<%=xvf.content[1]%>]</td><td><input name="xvf" placeholder="e.g. 0"></td></tr>
+        <tr><td>3. optimization velocity (knots): </td><td>[<%=xvf.content[2]%>]</td><td><input name="xvf" placeholder="e.g. 12"></td></tr>
+        <tr><td>4. overall ship length (for spectral range): </td><td>[<%=xvf.content[3]%>]</td><td><input name="xvf" placeholder="e.g. 14"></td></tr>
+      </table>
+      <button>Run Kelram Module - First Pass</button>
+    </form>
+  </fieldset>
+  <fieldset>
+    <legend>Output files</legend>
+    <table>
+      <tr>
+        <td>open wave-data output filename (unit 31): </td>
+        <td>testit.wav</td>
+        <td> | <a href='/view/testit.wav'>view</a></td>
+        <td> | <a href='/download/testit.wav' download="">download</a></td>
+        <td> | <%=wav.age%></td>
+      </tr>
+      <tr>
+        <td>main output filename (unit 2): </td>
+        <td>testit.op1</td>
+        <td> | <a href='/view/testit.op1'>view</a></td>
+        <td> | <a href='/download/testit.op1'>download</a></td>
+        <td> | <%=op1.age%></td>
+      </tr>
+      <tr>
+        <td>fort41: </td>
+        <td>fort41</td>
+        <td> | <a href='/view/FORT41'>view</a></td>
+        <td> | <a href='/download/FORT41'>download</a></td>
+        <td> | <%=FORT41.age%></td>
+      </tr>
+      <tr>
+        <td>terminal standard output: </td>
+        <td>terminal-output.txt</td>
+        <td> | <a href='/view/terminal-output.txt'>view</a></td>
+        <td> | <a href='/download/terminal-output.txt'>download</a></td>
+        <td> | <%=out.age%></td>
+      </tr>
+    </table>
+  </fieldset>  
+  <script src="./index.js"></script>
+</body>
+</html>

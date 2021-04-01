@@ -1,0 +1,17 @@
+/*
+body *{
+	font-family:monospace;
+}
+*/
+fieldset{
+	width: auto;
+}
+#upload-xvf-input{
+	display:none
+}
+input[type='file']{
+	width: 190px;
+}
+.successful{
+	color: darkgreen;
+}

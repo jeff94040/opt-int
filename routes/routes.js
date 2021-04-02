@@ -97,8 +97,10 @@ router.post('/', async (req, res) => {
 
     }
   }  
-  // Wait 1 second for fs changes
+  // Wait 2 seconds for fs changes
   await sleep(2000);
+
+  // TODO: parse and delim testit.wav -> testit-delimited.wav
 
   const fileMetrics = generateFileMetrics(req);
 
@@ -108,12 +110,22 @@ router.post('/', async (req, res) => {
 // Download a file
 router.get('/download/:filename', (req, res) => {
   const options = {headers: {'Content-Disposition': `attachment; filename=${req.params.filename.toUpperCase()}`, 'Content-Type': 'text/plain'}};
+
+  // Generate .ssv from .wav
+  if(req.params.filename === 'testit.wav.ssv'){
+    let wav = fs.readFileSync('C:/OptInt/testit.wav', 'utf8');
+    wav = wav.replace(/(E(\+|-)\d{2})/g,'$1 ');
+
+    fs.writeFileSync(`C:/OptInt/${req.params.filename}`, wav);
+  } 
+
   res.sendFile(`C:/OptInt/${req.params.filename}`, options, (err) => { if (err) next(err); });
 });
 
 // View a file
 router.get('/view/:filename', (req, res) => {
   const options = {headers: {'Content-Disposition': 'inline', 'Content-Type': 'text/plain'}};
+
   res.sendFile(`C:/OptInt/${req.params.filename}`, options, (err) => { if (err) next(err); });
 });
 

@@ -64,7 +64,7 @@
         <tr><td>1. number of hulls: </td><td>[<%=xvf.content[0]%>]</td><td><input name="xvf" placeholder="e.g. 1"></td></tr>
         <tr><td>2. y coordinate of hull centerline: </td><td>[<%=xvf.content[1]%>]</td><td><input name="xvf" placeholder="e.g. 0"></td></tr>
         <tr><td>3. optimization velocity (knots): </td><td>[<%=xvf.content[2]%>]</td><td><input name="xvf" placeholder="e.g. 12"></td></tr>
-        <tr><td>4. overall ship length (for spectral range): </td><td>[<%=xvf.content[3]%>]</td><td><input name="xvf" placeholder="e.g. 14"></td></tr>
+        <tr><td>4. overall ship length (for spectral range): </td><td>[<%=xvf.content[3]%>]</td><td><input name="xvf" placeholder="e.g. 140"></td></tr>
       </table>
       <button>Run Kelram Module - First Pass</button>
     </form>
@@ -73,14 +73,14 @@
     <legend>Output files</legend>
     <table>
       <tr>
-        <td>open wave-data output filename (unit 31): </td>
-        <td>testit.wav</td>
+        <td>wave-data output (unit 31): </td>
+        <td>testit.wav [<a href='/download/testit.wav.ssv' download="">.wav.ssv</a>]</td>
         <td> | <a href='/view/testit.wav'>view</a></td>
         <td> | <a href='/download/testit.wav' download="">download</a></td>
         <td> | <%=wav.age%></td>
       </tr>
       <tr>
-        <td>main output filename (unit 2): </td>
+        <td>main output (unit 2): </td>
         <td>testit.op1</td>
         <td> | <a href='/view/testit.op1'>view</a></td>
         <td> | <a href='/download/testit.op1'>download</a></td>
@@ -94,7 +94,7 @@
         <td> | <%=FORT41.age%></td>
       </tr>
       <tr>
-        <td>terminal standard output: </td>
+        <td>terminal output: </td>
         <td>terminal-output.txt</td>
         <td> | <a href='/view/terminal-output.txt'>view</a></td>
         <td> | <a href='/download/terminal-output.txt'>download</a></td>

@@ -30,20 +30,49 @@ function ageSinceMod(filePath, now){
 function generateFileMetrics(req){
   const fileMetrics = new Object(
     {
+      'shp': {
+        'age': ageSinceMod('C:/OptInt/testit.shp', Date.now()),
+        'uploaded': req.files?.shp ? true : false
+      },
       'stg': {
         'age': ageSinceMod('C:/OptInt/testit.stg', Date.now()),
-        'uploaded': typeof req.files !== 'undefined' && req.files && typeof req.files.stg !== 'undefined' && req.files.stg ? true : false
+        'uploaded': req.files?.stg ? true : false
+      },
+      'vvf': {
+        'age': ageSinceMod('C:/OptInt/testit.vvf', Date.now()),
+        'uploaded': req.files?.vvf ? true : false
       },
       'xvf': {
         'age': ageSinceMod('C:/OptInt/testit.xvf', Date.now()),
         'content': fs.readFileSync('C:/OptInt/testit.xvf', 'utf8').split('\r\n'),
-        'uploaded': typeof req.files !== 'undefined' && req.files && typeof req.files.xvf !== 'undefined' && req.files.xvf ? true : false
+        'uploaded': req.files?.xvf ? true : false
       },
       'wav': {
         'age': ageSinceMod('C:/OptInt/testit.wav', Date.now())
       },
       'op1': {
         'age': ageSinceMod('C:/OptInt/testit.op1', Date.now())
+      },
+      'op3': {
+        'age': ageSinceMod('C:/OptInt/testit.op3', Date.now())
+      },
+      'op4': {
+        'age': ageSinceMod('C:/OptInt/testit.op4', Date.now())
+      },
+      'pl1': {
+        'age': ageSinceMod('C:/OptInt/testit.pl1', Date.now())
+      },
+      'pl2': {
+        'age': ageSinceMod('C:/OptInt/testit.pl2', Date.now())
+      },
+      'pl3': {
+        'age': ageSinceMod('C:/OptInt/testit.pl3', Date.now())
+      },
+      'pl4': {
+        'age': ageSinceMod('C:/OptInt/testit.pl4', Date.now())
+      },
+      'pl5': {
+        'age': ageSinceMod('C:/OptInt/testit.pl5', Date.now())
       },
       'FORT41' : {
         'age': ageSinceMod('C:/OptInt/FORT41', Date.now())

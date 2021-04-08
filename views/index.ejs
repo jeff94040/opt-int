@@ -8,31 +8,35 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Main menu -->
+  <span style="color: red;">UNDER CONSTRUCTION - DO NOT USE</span>
   <fieldset>
     <legend>Main menu</legend>
     <table>
       <tr>
         <td>Select from the following: </td>
         <td>
-          <select name="main-menu">
+          <select name="menu" id="menu" form="data-edits-form">
+            <option value=""> 
             <option value="1" disabled>1.  DATA FILE PROCESSING (LIST, CHANGE)</option>
             <option value="2">2.  KELRAM MODULE - FIRST PASS</option>
-            <option value="3">3.  OPTRAM MODULE</option>
+            <option value="3" disabled>3.  OPTRAM MODULE</option>
             <option value="4" disabled>4.  BODYS MODULE</option>
             <option value="5">5.  KELRAM MODULE - SECOND PASS</option>
             <option value="6" disabled>6.  LIST DATA DISKETTE DIRECTORY</option>
             <option value="7" disabled>7.  MAKE SCREEN PLOT</option>
             <option value="8" disabled>8.  MAKE PRINTER PLOT</option>
-            <option value="0">0.  TERMINATE SESSION</option>
+            <option value="0" disabled>0.  TERMINATE SESSION</option>
           </select>
         </td>
       </tr>
     </table>
   </fieldset>
+  <!-- Input files -->
   <fieldset>
     <legend>Input files</legend>
-    <form enctype="multipart/form-data" action="/" method='post'>
-      <table id="files-table">
+    <form id="option-2-input-files-form" enctype="multipart/form-data" action="/" method="post" style="display:none">
+      <table>
         <tr>
           <td>open strut. geom. (unit 30): </td>
           <td>testit.stg</td>
@@ -52,13 +56,45 @@
           <td class='successful'><%=xvf.uploaded ? ' | upload successful' : ''%></td>
         </tr>
       </table>
-      <button>Upload</button>
+      <button>Upload File/s</button>
+    </form>
+    <form id="option-5-input-files-form" enctype="multipart/form-data" action="/" method="post" style="display:none">
+      <table>
+        <tr>
+          <td>open hull shape (unit 32): </td>
+          <td>testit.shp</td>
+          <td> | <a href='/view/testit.shp'>view</a></td>
+          <td> | <a href='/download/testit.shp'>download</a></td>
+          <td> | <%=shp.age%></td>
+          <td> | <input type='file' name='shp' accept='.shp'></td>
+          <td class="successful"><%=shp.uploaded ? ' | upload successful' : ''%></td>
+        </tr>
+        <tr>
+          <td>base data: </td>
+          <td>testit.xvf</td>
+          <td> | <a href='/view/testit.xvf'>view</a></td>
+          <td> | <a href='/download/testit.xvf'>download</a></td>
+          <td> | <%=xvf.age%></td>
+          <td> | <input type='file' name='xvf' accept='.xvf'></td>
+          <td class='successful'><%=xvf.uploaded ? ' | upload successful' : ''%></td>
+        </tr>
+        <tr>
+          <td>vv data file: </td>
+          <td>testit.vvf</td>
+          <td> | <a href='/view/testit.vvf'>view</a></td>
+          <td> | <a href='/download/testit.vvf'>download</a></td>
+          <td> | <%=vvf.age%></td>
+          <td> | <input type='file' name='vvf' accept='.vvf'></td>
+          <td class='successful'> <%=vvf.uploaded ? ' | upload successful' : ''%></td>
+        </tr>
+      </table>
+      <button>Upload File/s</button>
     </form>    
   </fieldset>
+  <!-- Data edits -->
   <fieldset>
     <legend>Edit / confirm basic input vector data within testit.xvf</legend>
-    <form action='/' method='post'>
-      <input type="hidden" name="menu" value="2">
+    <form id="data-edits-form" action='/' method='post'>
       <table>
         <tr><td>Vector data description</td><td>Current value</td><td>New value (decimal notation)</td></tr>
         <tr><td>1. number of hulls: </td><td>[<%=xvf.content[0]%>]</td><td><input name="xvf" placeholder="e.g. 1"></td></tr>
@@ -69,9 +105,10 @@
       <button>Run Kelram Module - First Pass</button>
     </form>
   </fieldset>
+  <!-- Output files -->
   <fieldset>
     <legend>Output files</legend>
-    <table>
+    <table id="option-2-output-files-table" style="display:none">
       <tr>
         <td>wave-data output (unit 31): </td>
         <td>testit.wav [<a href='/download/testit.wav.ssv' download="">.wav.ssv</a>]</td>
@@ -92,6 +129,64 @@
         <td> | <a href='/view/FORT41'>view</a></td>
         <td> | <a href='/download/FORT41'>download</a></td>
         <td> | <%=FORT41.age%></td>
+      </tr>
+      <tr>
+        <td>terminal output: </td>
+        <td>terminal-output.txt</td>
+        <td> | <a href='/view/terminal-output.txt'>view</a></td>
+        <td> | <a href='/download/terminal-output.txt'>download</a></td>
+        <td> | <%=out.age%></td>
+      </tr>
+    </table>
+    <table id="option-5-output-files-table" style="display:none">
+      <tr>
+        <td>main output (unit 2): </td>
+        <td>testit.op3</td>
+        <td> | <a href='/view/testit.op3'>view</a></td>
+        <td> | <a href='/download/testit.op3'>download</a></td>
+        <td> | <%=op3.age%></td>
+      </tr>
+      <tr>
+        <td>condensed open summary (unit 7): </td>
+        <td>testit.op4</td>
+        <td> | <a href='/view/testit.op4'>view</a></td>
+        <td> | <a href='/download/testit.op4'>download</a></td>
+        <td> | <%=op4.age%></td>
+      </tr>
+      <tr>
+        <td>plot data 1: </td>
+        <td>testit.pl1</td>
+        <td> | <a href='/view/testit.pl1'>view</a></td>
+        <td> | <a href='/download/testit.pl1'>download</a></td>
+        <td> | <%=pl1.age%></td>
+      </tr>
+      <tr>
+        <td>plot data 2: </td>
+        <td>testit.pl2</td>
+        <td> | <a href='/view/testit.pl2'>view</a></td>
+        <td> | <a href='/download/testit.pl2'>download</a></td>
+        <td> | <%=pl2.age%></td>
+      </tr>
+      <tr>
+        <td>plot data 3: </td>
+        <td>testit.pl3</td>
+        <td> | <a href='/view/testit.pl3'>view</a></td>
+        <td> | <a href='/download/testit.pl3'>download</a></td>
+        <td> | <%=pl3.age%></td>
+      </tr>
+      <tr>
+        <td>plot data 4: </td>
+        <td>testit.pl4</td>
+        <td> | <a href='/view/testit.pl4'>view</a></td>
+        <td> | <a href='/download/testit.pl4'>download</a></td>
+        <td> | <%=pl4.age%></td>
+      </tr>
+      <tr>
+        <td>plot data 5: </td>
+        <td>testit.pl5</td>
+        <td> | <a href='/view/testit.pl5'>view</a></td>
+        <td> | <a href='/download/testit.pl5'>download</a></td>
+        <td> | <%=pl5.age%></td>
       </tr>
       <tr>
         <td>terminal output: </td>

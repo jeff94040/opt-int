@@ -1,8 +1,44 @@
+// Add event listeners to all buttons. When a button is clicked, disable all buttons and submit the button's form.
+
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach( (button) => {
+  button.addEventListener('click', () => {
+    buttons.forEach( (button) => {
+      button.disabled = true;
+    });
+    button.form.submit();
+  });
+});
+
+const menu = document.querySelector('#menu');
+
+menu.addEventListener('change', toggleDisplays);
+
+function toggleDisplays () {
+  if(menu.value === '2'){
+    document.querySelector('#option-2-input-files-form').style.display='inline';
+    document.querySelector('#option-5-input-files-form').style.display='none';
+    document.querySelector('#option-2-output-files-table').style.display='inline';
+    document.querySelector('#option-5-output-files-table').style.display='none';
+  }
+  if(menu.value === '5'){
+    document.querySelector('#option-2-input-files-form').style.display='none';
+    document.querySelector('#option-5-input-files-form').style.display='inline';
+    document.querySelector('#option-2-output-files-table').style.display='none';
+    document.querySelector('#option-5-output-files-table').style.display='inline';
+  }
+};
+
+// Browser back button
+window.addEventListener('pageshow', toggleDisplays);
+
+
 // Show or hide sections based on main menu selection
 
-const main_menu_elem = document.querySelector("[name='main-menu']");
+//const main_menu_elem = document.querySelector("[name='main-menu']");
 
-main_menu_elem.addEventListener('change', () => {
+//main_menu_elem.addEventListener('change', () => {
 
   
 
@@ -21,22 +57,9 @@ main_menu_elem.addEventListener('change', () => {
   document.body.replaceChild(inputs_table_elem, document.querySelector('#inputs-table'));
   */
 
-});
+//});
 
 const yn_map = new Map([['y', 'yes'], ['n', 'no']]);
-
-// Add event listeners to all buttons. When a button is clicked, disable all buttons and submit the button's form.
-
-const buttons = document.querySelectorAll("button");
-
-buttons.forEach( (button) => {
-  button.addEventListener('click', () => {
-    buttons.forEach( (button) => {
-      button.disabled = true;
-    });
-    button.form.submit();
-  });
-});
 
 // Helper method designed to construct tr element containing input element
 function buildInputsInputRow(name, value, description){

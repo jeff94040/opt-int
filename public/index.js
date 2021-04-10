@@ -21,12 +21,24 @@ function toggleDisplays () {
     document.querySelector('#option-5-input-files-form').style.display='none';
     document.querySelector('#option-2-output-files-table').style.display='inline';
     document.querySelector('#option-5-output-files-table').style.display='none';
+    document.querySelector('#option-2-edit-data-form').style.display='inline';
+    document.querySelector('#option-5-edit-data-form').style.display='none';
   }
-  if(menu.value === '5'){
+  else if(menu.value === '5'){
     document.querySelector('#option-2-input-files-form').style.display='none';
     document.querySelector('#option-5-input-files-form').style.display='inline';
     document.querySelector('#option-2-output-files-table').style.display='none';
     document.querySelector('#option-5-output-files-table').style.display='inline';
+    document.querySelector('#option-2-edit-data-form').style.display='none';
+    document.querySelector('#option-5-edit-data-form').style.display='inline';
+  }
+  else {
+    document.querySelector('#option-2-input-files-form').style.display='none';
+    document.querySelector('#option-5-input-files-form').style.display='none';
+    document.querySelector('#option-2-output-files-table').style.display='none';
+    document.querySelector('#option-5-output-files-table').style.display='none'; 
+    document.querySelector('#option-2-edit-data-form').style.display='none';   
+    document.querySelector('#option-5-edit-data-form').style.display='none';   
   }
 };
 

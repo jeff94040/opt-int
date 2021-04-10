@@ -93,14 +93,55 @@
   </fieldset>
   <!-- Data edits -->
   <fieldset>
-    <legend>Edit / confirm basic input vector data within testit.xvf</legend>
-    <form id="data-edits-form" action='/' method='post'>
+    <legend>Edit input data</legend>
+    <form id="option-2-edit-data-form" action='/' method='post' style="display:none">
       <table>
-        <tr><td>Vector data description</td><td>Current value</td><td>New value (decimal notation)</td></tr>
+        <tr><td>testit.xvf - edit vector data</td><td>Current value</td><td>New value (decimal notation)</td></tr>
         <tr><td>1. number of hulls: </td><td>[<%=xvf.content[0]%>]</td><td><input name="xvf" placeholder="e.g. 1"></td></tr>
         <tr><td>2. y coordinate of hull centerline: </td><td>[<%=xvf.content[1]%>]</td><td><input name="xvf" placeholder="e.g. 0"></td></tr>
         <tr><td>3. optimization velocity (knots): </td><td>[<%=xvf.content[2]%>]</td><td><input name="xvf" placeholder="e.g. 12"></td></tr>
         <tr><td>4. overall ship length (for spectral range): </td><td>[<%=xvf.content[3]%>]</td><td><input name="xvf" placeholder="e.g. 140"></td></tr>
+      </table>
+      <button>Run Kelram Module - First Pass</button>
+    </form>
+    <form id="option-5-edit-data-form" action='/' method='post' style="display:none">
+      <table>
+        <tr><td>testit.xvf - edit vector data</td><td>Current value</td><td>New value (decimal notation)</td></tr>
+        <tr><td>1. number of hulls: </td><td>[<%=xvf.content[0]%>]</td><td><input name="xvf" placeholder="e.g. 1"></td></tr>
+        <tr><td>2. y coordinate of hull centerline: </td><td>[<%=xvf.content[1]%>]</td><td><input name="xvf" placeholder="e.g. 0"></td></tr>
+        <tr><td>3. optimization velocity (knots): </td><td>[<%=xvf.content[2]%>]</td><td><input name="xvf" placeholder="e.g. 12"></td></tr>
+        <tr><td>4. overall ship length (for spectral range): </td><td>[<%=xvf.content[3]%>]</td><td><input name="xvf" placeholder="e.g. 140"></td></tr>
+        <tr><td>5. char. length of one hull (not used): </td><td>[<%=xvf.content[4]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>6. wetted area of one hull ("): </td><td>[<%=xvf.content[5]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>7. number of struts per side (for spray): </td><td>[<%=xvf.content[6]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>8. no. of velocities to run (1 if first pass): </td><td>[<%=xvf.content[7]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>9. scale factor: </td><td>[<%=xvf.content[8]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>10. overall efficiency (ehp/bhp): </td><td>[<%=xvf.content[9]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>11. spray drag flag (1 if no spray drag): </td><td>[<%=xvf.content[10]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>12. option flag for strut drag coeff.: </td><td>[<%=xvf.content[11]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>13. option flag for lower hull drag coeff.: </td><td>[<%=xvf.content[12]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>-----------------</td><td></td><td></td></tr>
+        <tr><td>22. prop guard planform area (spg): </td><td>[<%=xvf.content[21]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>23. prop guard chord (pgchrd): </td><td>[<%=xvf.content[22]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>24. prop guard thickness/chord (pgtcr): </td><td>[<%=xvf.content[23]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>25. canard planform area (sc): </td><td>[<%=xvf.content[24]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>26. canard chord (cchrd): </td><td>[<%=xvf.content[25]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>27. canard thickness/chord (ctcr): </td><td>[<%=xvf.content[26]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>28. stabilizer planform area (ss): </td><td>[<%=xvf.content[27]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>29. stabilizer chord (schrd): </td><td>[<%=xvf.content[28]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>30. stabilizer thickness/chord (stcr): </td><td>[<%=xvf.content[29]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>31. rudder planform area (sr): </td><td>[<%=xvf.content[30]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>32. rudder chord (rchrd): </td><td>[<%=xvf.content[31]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>33. rudder thickness/chord (rtcr): </td><td>[<%=xvf.content[32]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>34. strut tip chord (ctst): </td><td>[<%=xvf.content[33]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>35. strut root chord (crst): </td><td>[<%=xvf.content[34]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>36. strut span (stspan): </td><td>[<%=xvf.content[35]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>37. strut thickness/chord (sttcr): </td><td>[<%=xvf.content[36]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>38. length of lower hull (llh) (not used): </td><td>[<%=xvf.content[37]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>39. diameter of lower hull ? (dhull) ("): </td><td>[<%=xvf.content[38]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>40. strut wetted surface area (swet) ("): </td><td>[<%=xvf.content[39]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>41. lower hull wetted surface area (hwet) ("): </td><td>[<%=xvf.content[40]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>42. frontal area (afront): </td><td>[<%=xvf.content[41]%>]</td><td><input name="xvf"></td></tr>
       </table>
       <button>Run Kelram Module - First Pass</button>
     </form>

@@ -15,3 +15,6 @@ input[type='file']{
 .successful{
 	color: darkgreen;
 }
+legend{
+	font-weight: bold;
+}

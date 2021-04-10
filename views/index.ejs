@@ -96,7 +96,7 @@
     <legend>Edit input data</legend>
     <form id="option-2-edit-data-form" action='/' method='post' style="display:none">
       <table>
-        <tr><td>testit.xvf - edit vector data</td><td>Current value</td><td>New value (decimal notation)</td></tr>
+        <tr style="font-weight: bold;"><td>testit.xvf - edit vector data</td><td>Current value</td><td>New value (decimal notation)</td></tr>
         <tr><td>1. number of hulls: </td><td>[<%=xvf.content[0]%>]</td><td><input name="xvf" placeholder="e.g. 1"></td></tr>
         <tr><td>2. y coordinate of hull centerline: </td><td>[<%=xvf.content[1]%>]</td><td><input name="xvf" placeholder="e.g. 0"></td></tr>
         <tr><td>3. optimization velocity (knots): </td><td>[<%=xvf.content[2]%>]</td><td><input name="xvf" placeholder="e.g. 12"></td></tr>
@@ -106,7 +106,7 @@
     </form>
     <form id="option-5-edit-data-form" action='/' method='post' style="display:none">
       <table>
-        <tr><td>testit.xvf - edit vector data</td><td>Current value</td><td>New value (decimal notation)</td></tr>
+        <tr style="font-weight: bold;"><td>testit.xvf - edit vector data</td><td>Current value</td><td>New value (decimal notation)</td></tr>
         <tr><td>1. number of hulls: </td><td>[<%=xvf.content[0]%>]</td><td><input name="xvf" placeholder="e.g. 1"></td></tr>
         <tr><td>2. y coordinate of hull centerline: </td><td>[<%=xvf.content[1]%>]</td><td><input name="xvf" placeholder="e.g. 0"></td></tr>
         <tr><td>3. optimization velocity (knots): </td><td>[<%=xvf.content[2]%>]</td><td><input name="xvf" placeholder="e.g. 12"></td></tr>
@@ -120,7 +120,7 @@
         <tr><td>11. spray drag flag (1 if no spray drag): </td><td>[<%=xvf.content[10]%>]</td><td><input name="xvf"></td></tr>
         <tr><td>12. option flag for strut drag coeff.: </td><td>[<%=xvf.content[11]%>]</td><td><input name="xvf"></td></tr>
         <tr><td>13. option flag for lower hull drag coeff.: </td><td>[<%=xvf.content[12]%>]</td><td><input name="xvf"></td></tr>
-        <tr><td>-----------------</td><td></td><td></td></tr>
+        <tr><td>...</td><td></td><td></td></tr>
         <tr><td>22. prop guard planform area (spg): </td><td>[<%=xvf.content[21]%>]</td><td><input name="xvf"></td></tr>
         <tr><td>23. prop guard chord (pgchrd): </td><td>[<%=xvf.content[22]%>]</td><td><input name="xvf"></td></tr>
         <tr><td>24. prop guard thickness/chord (pgtcr): </td><td>[<%=xvf.content[23]%>]</td><td><input name="xvf"></td></tr>
@@ -142,8 +142,61 @@
         <tr><td>40. strut wetted surface area (swet) ("): </td><td>[<%=xvf.content[39]%>]</td><td><input name="xvf"></td></tr>
         <tr><td>41. lower hull wetted surface area (hwet) ("): </td><td>[<%=xvf.content[40]%>]</td><td><input name="xvf"></td></tr>
         <tr><td>42. frontal area (afront): </td><td>[<%=xvf.content[41]%>]</td><td><input name="xvf"></td></tr>
+        <tr><td>...</td><td></td><td></td></tr>
+        <tr style="font-weight: bold;"><td>testit.vvf - edit velocity data</td><td>Current Value</td><td>New Value (decimal notation)</td></tr>
+        <tr><td># of velocities: </td><td>[<%=vvf.content[0]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #1: </td><td>[<%=vvf.content[1]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #2: </td><td>[<%=vvf.content[2]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #3: </td><td>[<%=vvf.content[3]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #4: </td><td>[<%=vvf.content[4]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #5: </td><td>[<%=vvf.content[5]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #6: </td><td>[<%=vvf.content[6]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #7: </td><td>[<%=vvf.content[7]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #8: </td><td>[<%=vvf.content[8]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #9: </td><td>[<%=vvf.content[9]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #10: </td><td>[<%=vvf.content[10]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #11: </td><td>[<%=vvf.content[11]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #12: </td><td>[<%=vvf.content[12]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #13: </td><td>[<%=vvf.content[13]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #14: </td><td>[<%=vvf.content[14]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #15: </td><td>[<%=vvf.content[15]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #16: </td><td>[<%=vvf.content[16]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #17: </td><td>[<%=vvf.content[17]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #18: </td><td>[<%=vvf.content[18]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #19: </td><td>[<%=vvf.content[19]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #20: </td><td>[<%=vvf.content[20]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #21: </td><td>[<%=vvf.content[21]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #22: </td><td>[<%=vvf.content[22]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #23: </td><td>[<%=vvf.content[23]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #24: </td><td>[<%=vvf.content[24]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #25: </td><td>[<%=vvf.content[25]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #26: </td><td>[<%=vvf.content[26]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #27: </td><td>[<%=vvf.content[27]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #28: </td><td>[<%=vvf.content[28]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #29: </td><td>[<%=vvf.content[29]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #30: </td><td>[<%=vvf.content[30]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #31: </td><td>[<%=vvf.content[31]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #32: </td><td>[<%=vvf.content[32]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #33: </td><td>[<%=vvf.content[33]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #34: </td><td>[<%=vvf.content[34]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #35: </td><td>[<%=vvf.content[35]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #36: </td><td>[<%=vvf.content[36]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #37: </td><td>[<%=vvf.content[37]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #38: </td><td>[<%=vvf.content[38]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #39: </td><td>[<%=vvf.content[39]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #40: </td><td>[<%=vvf.content[40]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #41: </td><td>[<%=vvf.content[41]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #42: </td><td>[<%=vvf.content[42]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #43: </td><td>[<%=vvf.content[43]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #44: </td><td>[<%=vvf.content[44]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #45: </td><td>[<%=vvf.content[45]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #46: </td><td>[<%=vvf.content[46]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #47: </td><td>[<%=vvf.content[47]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #48: </td><td>[<%=vvf.content[48]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #49: </td><td>[<%=vvf.content[49]%>]</td><td><input name="vvf"></td></tr>
+        <tr><td>velocity #50: </td><td>[<%=vvf.content[50]%>]</td><td><input name="vvf"></td></tr>
       </table>
-      <button>Run Kelram Module - First Pass</button>
+      <button>Run Kelram Module - Second Pass</button>
     </form>
   </fieldset>
   <!-- Output files -->

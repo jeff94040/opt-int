@@ -40,6 +40,7 @@ function generateFileMetrics(req){
       },
       'vvf': {
         'age': ageSinceMod('C:/OptInt/testit.vvf', Date.now()),
+        'content': fs.readFileSync('C:/OptInt/testit.vvf', 'utf8').split('\r\n'),
         'uploaded': req.files?.vvf ? true : false
       },
       'xvf': {

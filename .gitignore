@@ -1,5 +1,5 @@
 # Node modules
 node_modules/
 
-# Notes
-Notes.txt
+# .txt Notes
+*.txt

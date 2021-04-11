@@ -9,7 +9,7 @@
 </head>
 <body>
   <!-- Main menu -->
-  <span style="color: red;">UNDER CONSTRUCTION - DO NOT USE</span>
+  <!--<span style="color: red;">UNDER CONSTRUCTION - DO NOT USE</span>-->
   <fieldset>
     <legend>Main menu</legend>
     <select name="menu" id="menu">
@@ -22,7 +22,7 @@
   <!-- Input files -->
   <fieldset>
     <legend>Input files</legend>
-    <form id="option-2-input-files-form" enctype="multipart/form-data" action="/" method="post" style="display:none">
+    <form id="option-2-input-files-form" enctype="multipart/form-data" action="/upload" method="post" style="display:none">
       <table>
         <tr>
           <td>open strut. geom. (unit 30): </td>
@@ -45,7 +45,7 @@
       </table>
       <button>Upload File/s</button>
     </form>
-    <form id="option-5-input-files-form" enctype="multipart/form-data" action="/" method="post" style="display:none">
+    <form id="option-5-input-files-form" enctype="multipart/form-data" action="/upload" method="post" style="display:none">
       <table>
         <tr>
           <td>open hull shape (unit 32): </td>
@@ -81,7 +81,7 @@
   <!-- Data edits -->
   <fieldset>
     <legend>Edit input data</legend>
-    <form id="option-2-edit-data-form" action='/' method='post' style="display:none">
+    <form id="option-2-edit-data-form" action='/run' method='post' style="display:none">
       <table>
         <tr style="font-weight: bold;"><td>testit.xvf - edit vector data</td><td>Current value</td><td>New value (decimal notation)</td></tr>
         <tr><td>1. number of hulls: </td><td>[<%=xvf.content[0]%>]</td><td><input name="xvf" placeholder="e.g. 1"></td></tr>
@@ -89,9 +89,9 @@
         <tr><td>3. optimization velocity (knots): </td><td>[<%=xvf.content[2]%>]</td><td><input name="xvf" placeholder="e.g. 12"></td></tr>
         <tr><td>4. overall ship length (for spectral range): </td><td>[<%=xvf.content[3]%>]</td><td><input name="xvf" placeholder="e.g. 140"></td></tr>
       </table>
-      <button>Run Kelram Module - First Pass</button>
+      <button>Run Kelvin Wake Process</button>
     </form>
-    <form id="option-5-edit-data-form" action='/' method='post' style="display:none">
+    <form id="option-5-edit-data-form" action='/run' method='post' style="display:none">
       <table>
         <tr style="font-weight: bold;"><td>testit.xvf - edit vector data</td><td>Current value</td><td>New value (decimal notation)</td></tr>
         <tr><td>1. number of hulls: </td><td>[<%=xvf.content[0]%>]</td><td><input name="xvf" placeholder="e.g. 1"></td></tr>
@@ -183,7 +183,7 @@
         <tr><td>velocity #49: </td><td>[<%=vvf.content[49]%>]</td><td><input name="vvf"></td></tr>
         <tr><td>velocity #50: </td><td>[<%=vvf.content[50]%>]</td><td><input name="vvf"></td></tr>
       </table>
-      <button>Run Kelram Module - Second Pass</button>
+      <button>Run Resistance Predictions Process</button>
     </form>
   </fieldset>
   <!-- Output files -->

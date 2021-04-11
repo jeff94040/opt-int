@@ -30,6 +30,7 @@ function ageSinceMod(filePath, now){
 function generateFileMetrics(req){
   const fileMetrics = new Object(
     {
+      'menu': req.body.menu ? req.body.menu : '',
       'shp': {
         'age': ageSinceMod('C:/OptInt/testit.shp', Date.now()),
         'uploaded': req.files?.shp ? true : false
@@ -111,7 +112,7 @@ router.post('/', async (req, res) => {
   }
   else{ // Execute program
     // Main menu option #2, klrint.exe (pass one)
-    if(req.body.menu == 2){
+    if(req.body.menu == 1){
       //const commands = ['','','','','','','','','s','1','4',req.body.xvf[0],req.body.xvf[1],req.body.xvf[2],req.body.xvf[3],'','',''];
       const commands = ['baseline','testit','testit.op1','y','testit.stg','y','1','testit.xvf','s','1','4',req.body.xvf[0],req.body.xvf[1],req.body.xvf[2],req.body.xvf[3],'r','testit.wav','y'];
 
@@ -129,8 +130,6 @@ router.post('/', async (req, res) => {
   }  
   // Wait 2 seconds for fs changes
   await sleep(2000);
-
-  // TODO: parse and delim testit.wav -> testit-delimited.wav
 
   const fileMetrics = generateFileMetrics(req);
 

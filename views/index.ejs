@@ -12,25 +12,12 @@
   <span style="color: red;">UNDER CONSTRUCTION - DO NOT USE</span>
   <fieldset>
     <legend>Main menu</legend>
-    <table>
-      <tr>
-        <td>Select from the following: </td>
-        <td>
-          <select name="menu" id="menu" form="data-edits-form">
-            <option value=""> 
-            <option value="1" disabled>1.  DATA FILE PROCESSING (LIST, CHANGE)</option>
-            <option value="2">2.  KELRAM MODULE - FIRST PASS</option>
-            <option value="3" disabled>3.  OPTRAM MODULE</option>
-            <option value="4" disabled>4.  BODYS MODULE</option>
-            <option value="5">5.  KELRAM MODULE - SECOND PASS</option>
-            <option value="6" disabled>6.  LIST DATA DISKETTE DIRECTORY</option>
-            <option value="7" disabled>7.  MAKE SCREEN PLOT</option>
-            <option value="8" disabled>8.  MAKE PRINTER PLOT</option>
-            <option value="0" disabled>0.  TERMINATE SESSION</option>
-          </select>
-        </td>
-      </tr>
-    </table>
+    <select name="menu" id="menu">
+      <option value="">Select a process to run:</option>
+      <option value="1">Kelvin Wake</option>
+      <option value="2" disabled>Hull Optimization</option>
+      <option value="3">Resistance Predictions</option>
+    </select>
   </fieldset>
   <!-- Input files -->
   <fieldset>
@@ -291,6 +278,9 @@
       </tr>
     </table>
   </fieldset>  
+  <script>
+    const previousMenu = '<%=menu%>';
+  </script>  
   <script src="./index.js"></script>
 </body>
 </html>

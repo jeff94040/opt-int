@@ -49,11 +49,17 @@ function generateFileMetrics(req){
         'content': fs.readFileSync('C:/OptInt/testit.xvf', 'utf8').split('\r\n'),
         'uploaded': req.files?.xvf ? true : false
       },
+      'hlg': {
+        'age': ageSinceMod('C:/OptInt/testit.hlg', Date.now())
+      },
       'wav': {
         'age': ageSinceMod('C:/OptInt/testit.wav', Date.now())
       },
       'op1': {
         'age': ageSinceMod('C:/OptInt/testit.op1', Date.now())
+      },
+      'op2': {
+        'age': ageSinceMod('C:/OptInt/testit.op2', Date.now())
       },
       'op3': {
         'age': ageSinceMod('C:/OptInt/testit.op3', Date.now())

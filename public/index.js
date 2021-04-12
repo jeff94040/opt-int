@@ -19,6 +19,7 @@ buttons.forEach( (button) => {
 });
 
 const dataMenuOne = document.querySelectorAll('[data-menu-1]');
+const dataMenuTwo = document.querySelectorAll('[data-menu-2]');
 const dataMenuThree = document.querySelectorAll('[data-menu-3]');
 
 menu.addEventListener('change', toggleDisplays);
@@ -26,6 +27,20 @@ menu.addEventListener('change', toggleDisplays);
 function toggleDisplays () {
   if(menu.value === '1'){
     dataMenuOne.forEach( (elem) => {
+      elem.style.display='inline';
+    });
+    dataMenuTwo.forEach( (elem) => {
+      elem.style.display='none';
+    });
+    dataMenuThree.forEach( (elem) => {
+      elem.style.display='none';
+    });
+  }
+  else if(menu.value === '2'){
+    dataMenuOne.forEach( (elem) => {
+      elem.style.display='none';
+    });
+    dataMenuTwo.forEach( (elem) => {
       elem.style.display='inline';
     });
     dataMenuThree.forEach( (elem) => {
@@ -36,12 +51,18 @@ function toggleDisplays () {
     dataMenuOne.forEach( (elem) => {
       elem.style.display='none';
     });
+    dataMenuTwo.forEach( (elem) => {
+      elem.style.display='none';
+    });
     dataMenuThree.forEach( (elem) => {
       elem.style.display='inline';
     });    
   }
   else {
     dataMenuOne.forEach( (elem) => {
+      elem.style.display='none';
+    });
+    dataMenuTwo.forEach( (elem) => {
       elem.style.display='none';
     });
     dataMenuThree.forEach( (elem) => {

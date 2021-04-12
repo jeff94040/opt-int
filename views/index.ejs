@@ -15,7 +15,7 @@
     <select name="menu" id="menu">
       <option value="">Select a process to run:</option>
       <option value="1">Kelvin Wake</option>
-      <option value="2" disabled>Hull Optimization</option>
+      <option value="2">Hull Optimization</option>
       <option value="3">Resistance Predictions</option>
     </select>
   </fieldset>
@@ -44,6 +44,46 @@
         </tr>
       </table>
       <button>Upload File/s</button>
+    </form>
+    <form data-menu-2 enctype="multipart/form-data" action="/upload" method="post" style="display:none">
+      <table>
+        <tr>
+          <td>open hull shape (unit 32): </td>
+          <td>testit.shp</td>
+          <td> | <a href='/view/testit.shp'>view</a></td>
+          <td> | <a href='/download/testit.shp'>download</a></td>
+          <td> | <%=shp.age%></td>
+          <td> | <input type='file' name='shp' accept='.shp'></td>
+          <td class="successful"><%=shp.uploaded ? ' | upload successful' : ''%></td>
+        </tr>
+        <tr>
+          <td>open strut. geom. (unit 30): </td>
+          <td>testit.stg</td>
+          <td> | <a href='/view/testit.stg'>view</a></td>
+          <td> | <a href='/download/testit.stg'>download</a></td>
+          <td> | <%=stg.age%></td>
+          <td> | <input type='file' name='stg' accept='.stg'></td>
+          <td class="successful"><%=stg.uploaded ? ' | upload successful' : ''%></td>
+        </tr>
+        <tr>
+          <td>open wave spectra input file - (unit 31): </td>
+          <td>testit.wav</td>
+          <td> | <a href='/view/testit.wav'>view</a></td>
+          <td> | <a href='/download/testit.wav'>download</a></td>
+          <td> | <%=wav.age%></td>
+          <td> | <input type='file' name='wav' accept='.wav'></td>
+          <td class='successful'><%=wav.uploaded ? ' | upload successful' : ''%></td>
+        </tr>
+        <tr>
+          <td>base data: </td>
+          <td>testit.xvf</td>
+          <td> | <a href='/view/testit.xvf'>view</a></td>
+          <td> | <a href='/download/testit.xvf'>download</a></td>
+          <td> | <%=xvf.age%></td>
+          <td> | <input type='file' name='xvf' accept='.xvf'></td>
+          <td class='successful'><%=xvf.uploaded ? ' | upload successful' : ''%></td>
+        </tr>
+      </table>
     </form>
     <form data-menu-3 enctype="multipart/form-data" action="/upload" method="post" style="display:none">
       <table>
@@ -209,6 +249,29 @@
         <td> | <a href='/view/FORT41'>view</a></td>
         <td> | <a href='/download/FORT41'>download</a></td>
         <td> | <%=FORT41.age%></td>
+      </tr>
+      <tr>
+        <td>terminal output: </td>
+        <td>terminal-output.txt</td>
+        <td> | <a href='/view/terminal-output.txt'>view</a></td>
+        <td> | <a href='/download/terminal-output.txt'>download</a></td>
+        <td> | <%=out.age%></td>
+      </tr>
+    </table>
+    <table data-menu-2 style="display:none">
+      <tr>
+        <td>main optjm output (unit 2): </td>
+        <td>testit.op2</td>
+        <td> | <a href='/view/testit.op2'>view</a></td>
+        <td> | <a href='/download/testit.op2'>download</a></td>
+        <td> | <%=op2.age%></td>
+      </tr>
+      <tr>
+        <td>submerged shape output (unit 32): </td>
+        <td>testit.hlg</td>
+        <td> | <a href='/view/testit.hlg'>view</a></td>
+        <td> | <a href='/download/testit.hlg'>download</a></td>
+        <td> | <%=hlg.age%></td>
       </tr>
       <tr>
         <td>terminal output: </td>

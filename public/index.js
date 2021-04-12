@@ -18,32 +18,35 @@ buttons.forEach( (button) => {
   });
 });
 
+const dataMenuOne = document.querySelectorAll('[data-menu-1]');
+const dataMenuThree = document.querySelectorAll('[data-menu-3]');
+
 menu.addEventListener('change', toggleDisplays);
 
 function toggleDisplays () {
   if(menu.value === '1'){
-    document.querySelector('#option-2-input-files-form').style.display='inline';
-    document.querySelector('#option-5-input-files-form').style.display='none';
-    document.querySelector('#option-2-output-files-table').style.display='inline';
-    document.querySelector('#option-5-output-files-table').style.display='none';
-    document.querySelector('#option-2-edit-data-form').style.display='inline';
-    document.querySelector('#option-5-edit-data-form').style.display='none';
+    dataMenuOne.forEach( (elem) => {
+      elem.style.display='inline';
+    });
+    dataMenuThree.forEach( (elem) => {
+      elem.style.display='none';
+    });
   }
   else if(menu.value === '3'){
-    document.querySelector('#option-2-input-files-form').style.display='none';
-    document.querySelector('#option-5-input-files-form').style.display='inline';
-    document.querySelector('#option-2-output-files-table').style.display='none';
-    document.querySelector('#option-5-output-files-table').style.display='inline';
-    document.querySelector('#option-2-edit-data-form').style.display='none';
-    document.querySelector('#option-5-edit-data-form').style.display='inline';
+    dataMenuOne.forEach( (elem) => {
+      elem.style.display='none';
+    });
+    dataMenuThree.forEach( (elem) => {
+      elem.style.display='inline';
+    });    
   }
   else {
-    document.querySelector('#option-2-input-files-form').style.display='none';
-    document.querySelector('#option-5-input-files-form').style.display='none';
-    document.querySelector('#option-2-output-files-table').style.display='none';
-    document.querySelector('#option-5-output-files-table').style.display='none'; 
-    document.querySelector('#option-2-edit-data-form').style.display='none';   
-    document.querySelector('#option-5-edit-data-form').style.display='none';   
+    dataMenuOne.forEach( (elem) => {
+      elem.style.display='none';
+    });
+    dataMenuThree.forEach( (elem) => {
+      elem.style.display='none';
+    });    
   }
 };
 

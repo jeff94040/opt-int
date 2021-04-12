@@ -88,7 +88,7 @@ function generateFileMetrics(req){
 }
 
 // Render homepage
-router.get('/*', (req, res) => {
+router.get('/', (req, res) => {
   
   const fileMetrics = generateFileMetrics(req);
 
@@ -139,7 +139,7 @@ router.post('/run', async (req, res) => {
   }
   else if(req.body.menu == 3){
 
-    const commands = ['baseline', 'testit', 'testit.op3', 'y', 'testit.shp', 'y', '1', 'testit.xvf', 's', '1', '13', req.body.xvf[0], req.body.xvf[1], req.body.xvf[2], req.body.xvf[3], req.body.xvf[4], req.body.xvf[5], req.body.xvf[6], req.body.xvf[7], req.body.xvf[8], req.body.xvf[9], req.body.xvf[10], req.body.xvf[11], req.body.xvf[12], 'r', '1', 's', '22', '42', req.body.xvf[13], req.body.xvf[14], req.body.xvf[15], req.body.xvf[16], req.body.xvf[17], req.body.xvf[18], req.body.xvf[19], req.body.xvf[20], req.body.xvf[21], req.body.xvf[22], req.body.xvf[23], req.body.xvf[24], req.body.xvf[25], req.body.xvf[26], req.body.xvf[27], req.body.xvf[28], req.body.xvf[29], req.body.xvf[30], req.body.xvf[31], req.body.xvf[32], req.body.xvf[33], 'r', '1', 'testit.vvf', 's', '1', '50', req.body.vvf[0], req.body.vvf[1], req.body.vvf[2], req.body.vvf[3], req.body.vvf[4], req.body.vvf[5], req.body.vvf[6], req.body.vvf[7], req.body.vvf[8], req.body.vvf[9], req.body.vvf[10], req.body.vvf[11], req.body.vvf[12], req.body.vvf[13], req.body.vvf[14], req.body.vvf[15], req.body.vvf[16], req.body.vvf[17], req.body.vvf[18], req.body.vvf[19], req.body.vvf[20], req.body.vvf[21], req.body.vvf[22], req.body.vvf[23], req.body.vvf[24], req.body.vvf[25], req.body.vvf[26], req.body.vvf[27], req.body.vvf[28], req.body.vvf[29], req.body.vvf[30], req.body.vvf[31], req.body.vvf[32], req.body.vvf[33], req.body.vvf[34], req.body.vvf[35], req.body.vvf[36], req.body.vvf[37], req.body.vvf[38], req.body.vvf[39], req.body.vvf[40], req.body.vvf[41], req.body.vvf[42], req.body.vvf[43], req.body.vvf[44], req.body.vvf[45], req.body.vvf[46], req.body.vvf[47], req.body.vvf[48], req.body.vvf[49], req.body.vvf[50], 'r', 'testit.op4', 'y', 'testit.pl1', 'y', 'testit.pl2', 'y', 'testit.pl3', 'y', 'testit.pl4', 'y', 'testit.pl5', 'y'];
+    const commands = ['baseline', 'testit', 'testit.op3', 'y', 'testit.shp', 'y', '1', 'testit.xvf', 's', '1', '13', req.body.xvf[0], req.body.xvf[1], req.body.xvf[2], req.body.xvf[3], req.body.xvf[4], req.body.xvf[5], req.body.xvf[6], req.body.xvf[7], req.body.xvf[8], req.body.xvf[9], req.body.xvf[10], req.body.xvf[11], req.body.xvf[12], 'r', '1', 's', '22', '42', req.body.xvf[13], req.body.xvf[14], req.body.xvf[15], req.body.xvf[16], req.body.xvf[17], req.body.xvf[18], req.body.xvf[19], req.body.xvf[20], req.body.xvf[21], req.body.xvf[22], req.body.xvf[23], req.body.xvf[24], req.body.xvf[25], req.body.xvf[26], req.body.xvf[27], req.body.xvf[28], req.body.xvf[29], req.body.xvf[30], req.body.xvf[31], req.body.xvf[32], req.body.xvf[33], 'r', '1', 'testit.vvf', 's', '1', '50', req.body.vvf[0], req.body.vvf[1], req.body.vvf[2], req.body.vvf[3], req.body.vvf[4], req.body.vvf[5], req.body.vvf[6], req.body.vvf[7], req.body.vvf[8], req.body.vvf[9], req.body.vvf[10], req.body.vvf[11], req.body.vvf[12], req.body.vvf[13], req.body.vvf[14], req.body.vvf[15], req.body.vvf[16], req.body.vvf[17], req.body.vvf[18], req.body.vvf[19], req.body.vvf[20], req.body.vvf[21], req.body.vvf[22], req.body.vvf[23], req.body.vvf[24], req.body.vvf[25], req.body.vvf[26], req.body.vvf[27], req.body.vvf[28], req.body.vvf[29], req.body.vvf[30], req.body.vvf[31], req.body.vvf[32], req.body.vvf[33], req.body.vvf[34], req.body.vvf[35], req.body.vvf[36], req.body.vvf[37], req.body.vvf[38], req.body.vvf[39], req.body.vvf[40], req.body.vvf[41], req.body.vvf[42], req.body.vvf[43], req.body.vvf[44], req.body.vvf[45], req.body.vvf[46], req.body.vvf[47], req.body.vvf[48], req.body.vvf[49], 'r', 'testit.op4', 'y', 'testit.pl1', 'y', 'testit.pl2', 'y', 'testit.pl3', 'y', 'testit.pl4', 'y', 'testit.pl5', 'y'];
 
     const ws = fs.createWriteStream('C:/OptInt/terminal-input.txt');
     commands.forEach( (value) => {
@@ -149,11 +149,11 @@ router.post('/run', async (req, res) => {
 
     // Event logger
     var log = new nw.EventLogger('OptInt');
-    log.info('OptInt information log message.', 2);
+    log.info('OptInt information log message.', 3);
 
   }
-
-  await sleep(4000);
+  // 5 seconds not long enough
+  await sleep(7000);
 
   const fileMetrics = generateFileMetrics(req);
 

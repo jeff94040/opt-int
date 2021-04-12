@@ -22,7 +22,7 @@
   <!-- Input files -->
   <fieldset>
     <legend>Input files</legend>
-    <form id="option-2-input-files-form" enctype="multipart/form-data" action="/upload" method="post" style="display:none">
+    <form data-menu-1 enctype="multipart/form-data" action="/upload" method="post" style="display:none">
       <table>
         <tr>
           <td>open strut. geom. (unit 30): </td>
@@ -45,7 +45,7 @@
       </table>
       <button>Upload File/s</button>
     </form>
-    <form id="option-5-input-files-form" enctype="multipart/form-data" action="/upload" method="post" style="display:none">
+    <form data-menu-3 enctype="multipart/form-data" action="/upload" method="post" style="display:none">
       <table>
         <tr>
           <td>open hull shape (unit 32): </td>
@@ -81,7 +81,7 @@
   <!-- Data edits -->
   <fieldset>
     <legend>Edit input data</legend>
-    <form id="option-2-edit-data-form" action='/run' method='post' style="display:none">
+    <form data-menu-1 action='/run' method='post' style="display:none">
       <table>
         <tr style="font-weight: bold;"><td>testit.xvf - edit vector data</td><td>Current value</td><td>New value (decimal notation)</td></tr>
         <tr><td>1. number of hulls: </td><td>[<%=xvf.content[0]%>]</td><td><input name="xvf" placeholder="e.g. 1"></td></tr>
@@ -91,7 +91,7 @@
       </table>
       <button>Run Kelvin Wake Process</button>
     </form>
-    <form id="option-5-edit-data-form" action='/run' method='post' style="display:none">
+    <form data-menu-3 action='/run' method='post' style="display:none">
       <table>
         <tr style="font-weight: bold;"><td>testit.xvf - edit vector data</td><td>Current value</td><td>New value (decimal notation)</td></tr>
         <tr><td>1. number of hulls: </td><td>[<%=xvf.content[0]%>]</td><td><input name="xvf" placeholder="e.g. 1"></td></tr>
@@ -181,7 +181,6 @@
         <tr><td>velocity #47: </td><td>[<%=vvf.content[47]%>]</td><td><input name="vvf"></td></tr>
         <tr><td>velocity #48: </td><td>[<%=vvf.content[48]%>]</td><td><input name="vvf"></td></tr>
         <tr><td>velocity #49: </td><td>[<%=vvf.content[49]%>]</td><td><input name="vvf"></td></tr>
-        <tr><td>velocity #50: </td><td>[<%=vvf.content[50]%>]</td><td><input name="vvf"></td></tr>
       </table>
       <button>Run Resistance Predictions Process</button>
     </form>
@@ -189,7 +188,7 @@
   <!-- Output files -->
   <fieldset>
     <legend>Output files</legend>
-    <table id="option-2-output-files-table" style="display:none">
+    <table data-menu-1 style="display:none">
       <tr>
         <td>wave-data output (unit 31): </td>
         <td>testit.wav [<a href='/download/testit.wav.ssv' download="">.wav.ssv</a>]</td>
@@ -219,7 +218,7 @@
         <td> | <%=out.age%></td>
       </tr>
     </table>
-    <table id="option-5-output-files-table" style="display:none">
+    <table data-menu-3 style="display:none">
       <tr>
         <td>main output (unit 2): </td>
         <td>testit.op3</td>

@@ -51,20 +51,51 @@ body_shape_elem.addEventListener('change', () => {
     add_input_row('hull nose coordinates: ', 'hull-nose-coords');
     add_input_row('next hull control point coordinates: ', 'next-hull-ctrl-pt-coords');
     add_input_row('# of segements between control points: ', 'segments-between-ctrl-pts');
+    add_select_row('add another control point? :', 'add-ctrl-point', {'': '', no: 'n', yes: 'y'});
   }
   else if(body_shape_elem.value === 'f'){
 
   }
 });
 
-function add_input_row (text_desc, input_name) {
+function add_input_row (text_desc, name) {
+  const tr = document.createElement('tr');
+  const td_a = document.createElement('td');
+  td_a.innerText = text_desc;
+  td_a.style.paddingLeft = '20px';
+  const td_b = document.createElement('td');
+  td_b.style.paddingLeft = '20px';
+  const input = document.createElement('input');
+  input.name = name;
+  td_b.appendChild(input);
+  tr.appendChild(td_a);
+  tr.appendChild(td_b);
+  body_shape_elem.form.querySelector('table').appendChild(tr);
+}
+
+function add_select_row (text_desc, name, options){
   const tr = document.createElement('tr');
   const td_a = document.createElement('td');
   td_a.innerText = text_desc;
   const td_b = document.createElement('td');
-  const input = document.createElement('input');
-  input.name = input_name;
-  td_b.appendChild(input);
+  const select = document.createElement('select');
+  select.name = name;
+  for (const [key, value] of Object.entries(options)) {
+    const option = document.createElement('option');
+    option.innerHTML = key;
+    option.value = value;
+    select.appendChild(option);
+    //console.log(`${key} ${value}`);
+  }
+  select.addEventListener('click', () => { 
+    if (select.value === 'n'){
+
+    }
+    else if(select.value === 'y'){
+      
+    }
+  });
+  td_b.appendChild(select);
   tr.appendChild(td_a);
   tr.appendChild(td_b);
   body_shape_elem.form.querySelector('table').appendChild(tr);

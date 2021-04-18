@@ -133,7 +133,27 @@
     </form>
     <form data-menu-2 action="/run" method="post" style="display:none;">
       <table id='option-2-table'>
-        <tr><td>submerged hull geometry file label: </td><td><input type="text" name="label"></td></tr>
+        <tr><td>submerged hull geometry file label: </td><td><input type="text" name="sequence"></td></tr>
+        <tr>
+          <td>number of hull bodies: </td>
+          <td>
+            <select id="hull-body-count">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+      <table id='hull-bodies-table'>
+      </table>
 
         <!--
         <tr><td>43. longitudinal center of bouyancy [<%=xvf.content[42]%>]: </td><td><input type="text" name="xvf"></td></tr>

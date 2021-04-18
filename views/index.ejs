@@ -132,22 +132,15 @@
       <button>Run Kelvin Wake Process</button>
     </form>
     <form data-menu-2 action="/run" method="post" style="display:none;">
-      <table>
+      <table id='option-2-table'>
         <tr><td>submerged hull geometry file label: </td><td><input type="text" name="label"></td></tr>
-        <tr><td>body name: </td><td><input type="text" name="body-name"></td></tr>
-        <tr><td>body shape: </td>
-          <td>
-            <select name="body-shape" id="body-shape">
-              <option value=""></option>
-              <option value="a">axisymetric</option>
-              <option value="f">foil</option>
-            </select>
-          </td>
-        </tr>
+
+        <!--
         <tr><td>43. longitudinal center of bouyancy [<%=xvf.content[42]%>]: </td><td><input type="text" name="xvf"></td></tr>
         <tr><td>44. ship displacement (long tons) [<%=xvf.content[43]%>]: </td><td><input type="text" name="xvf"></td></tr>
         <tr><td>45. opt. param. (1=drag, 2=height, 3=slope) [<%=xvf.content[44]%>]: </td><td><input type="text" name="xvf"></td></tr>
         <tr><td>46. reasonablenes factor alpha (0&lt;alpha&lt;1) [<%=xvf.content[45]%>]: </td><td><input type="text" name="xvf"></td></tr>
+        -->
       </table>
     </form>
     <form data-menu-3 action='/run' method='post' style="display:none">
@@ -361,7 +354,9 @@
   </fieldset>  
   <script>
     const previousMenu = '<%=menu%>';
-  </script>  
+    var xvfContent = '<%=xvf.content%>';
+    xvfContent = xvfContent.split(',');
+  </script>
   <script src="./index.js"></script>
 </body>
 </html>

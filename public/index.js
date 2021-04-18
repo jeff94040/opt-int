@@ -32,6 +32,7 @@ function toggleDisplays () {
     dataMenuOne.forEach( (elem) => { elem.style.display='none'; });
     dataMenuTwo.forEach( (elem) => { elem.style.display='inline'; });
     dataMenuThree.forEach( (elem) => { elem.style.display='none'; });
+    add_body_name_and_shape();
   }
   else if(menu.value === '3'){
     dataMenuOne.forEach( (elem) => { elem.style.display='none'; });
@@ -45,39 +46,87 @@ function toggleDisplays () {
   }
 };
 
-const body_shape_elem = document.querySelector('#body-shape');
-body_shape_elem.addEventListener('change', () => {
-  if(body_shape_elem.value === 'a'){
-    add_input_row('hull nose coordinates: ', 'hull-nose-coords');
-    add_input_row('next hull control point coordinates: ', 'next-hull-ctrl-pt-coords');
-    add_input_row('# of segements between control points: ', 'segments-between-ctrl-pts');
-    add_select_row('add another control point? :', 'add-ctrl-point', {'': '', no: 'n', yes: 'y'});
-  }
-  else if(body_shape_elem.value === 'f'){
+/////////////////////////////////
 
-  }
-});
+const table = document.querySelector('#option-2-table');
 
-function add_input_row (text_desc, name) {
-  const tr = document.createElement('tr');
-  const td_a = document.createElement('td');
-  td_a.innerText = text_desc;
-  td_a.style.paddingLeft = '20px';
-  const td_b = document.createElement('td');
-  td_b.style.paddingLeft = '20px';
-  const input = document.createElement('input');
-  input.name = name;
-  td_b.appendChild(input);
-  tr.appendChild(td_a);
-  tr.appendChild(td_b);
-  body_shape_elem.form.querySelector('table').appendChild(tr);
+function add_body_name_and_shape () {
+  table.appendChild(add_input_row('body name: ','body-name','0px'));
+  const tr = add_select_row('body shape: ', 'body-shape', {'': '', axisymetric: 'a', foil: 'f'}, '0px');
+  table.appendChild(tr);
+  const select = tr.querySelector('select');
+  select.addEventListener('change', () => {
+    select.value === 'a' ? add_axisymetric_body() : console.log('need to code f'); 
+  });
 }
 
-function add_select_row (text_desc, name, options){
-  const tr = document.createElement('tr');
+// Add x4 table rows for axisymetric
+function add_axisymetric_body () {
+  // Add 1 of 4 table rows for axisymetric
+  table.appendChild(add_input_row('hull nose coordinates: ', 'hull-nose-coords', '20px'));
+  // Add 2-4 of 4 table rows for axisymetric
+  addControlPointCoordinates();
+};
+
+// Add 2-4 of 4 table rows for axisymetric
+function addControlPointCoordinates(){
+  table.appendChild(add_input_row('next hull control point coordinates: ', 'next-hull-ctrl-pt-coords', '20px'));
+  table.appendChild(add_input_row('# of segements between control points: ', 'segments-between-ctrl-pts', '20px'));
+  const tr = add_select_row('add another control point? :', 'add-ctrl-point', {'': '', no: 'n', yes: 'y'}, '20px');
+  table.appendChild(tr);
+  const select = tr.querySelector('select');
+  select.addEventListener('change', () => {
+    select.value === 'n' ? addHullBodyPrompt() : addControlPointCoordinates();
+  });
+}
+
+function addHullBodyPrompt(){
+  const tr = add_select_row('add another hull body? ', 'add-hull-body', {'': '', no: 'n', yes: 'y'}, '0px');
+  table.appendChild(tr);
+
+  const select = tr.querySelector('select');
+  select.addEventListener('change', () => {
+    if(select.value === 'n'){
+      add_data_edits();
+    }
+    else if(select.value === 'y'){
+      add_body_name_and_shape();
+    }
+  });
+}
+
+function add_data_edits(){
+  table.appendChild(add_input_row(`43. longitudinal center of bouyancy [${xvfContent[42]}]: `, 'xvf', '0px'));
+  table.appendChild(add_input_row(`44. ship displacement (long tons) [${xvfContent[43]}]: `, 'xvf', '0px'));
+  table.appendChild(add_input_row(`45. opt. param. (1=drag, 2=height, 3=slope) [${xvfContent[44]}]: `, 'xvf', '0px'));
+  table.appendChild(add_input_row(`46. reasonablenes factor alpha (0<alpha<1) [${xvfContent[45]}]: `, 'xvf', '0px'));
+}
+
+function add_input_row (text_desc, name, padding_left) {
   const td_a = document.createElement('td');
   td_a.innerText = text_desc;
+  td_a.style.paddingLeft = padding_left;
+  
+  const input = document.createElement('input');
+  input.name = name;  
+  
   const td_b = document.createElement('td');
+  td_b.style.paddingLeft = padding_left;
+  td_b.appendChild(input);
+  
+  const tr = document.createElement('tr');
+  tr.appendChild(td_a);
+  tr.appendChild(td_b);
+
+  return tr;
+}
+
+function add_select_row (text_desc, name, options, padding_left){
+  
+  const td_a = document.createElement('td');
+  td_a.innerText = text_desc;
+  td_a.style.paddingLeft = padding_left;
+  
   const select = document.createElement('select');
   select.name = name;
   for (const [key, value] of Object.entries(options)) {
@@ -85,20 +134,17 @@ function add_select_row (text_desc, name, options){
     option.innerHTML = key;
     option.value = value;
     select.appendChild(option);
-    //console.log(`${key} ${value}`);
   }
-  select.addEventListener('click', () => { 
-    if (select.value === 'n'){
-
-    }
-    else if(select.value === 'y'){
-      
-    }
-  });
+  
+  const td_b = document.createElement('td');
+  td_b.style.paddingLeft = padding_left;
   td_b.appendChild(select);
+
+  const tr = document.createElement('tr');
   tr.appendChild(td_a);
   tr.appendChild(td_b);
-  body_shape_elem.form.querySelector('table').appendChild(tr);
+
+  return tr;
 }
 
 // Browser back button

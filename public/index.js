@@ -65,7 +65,7 @@ function populate_bodies(body_count){
 
   for(i = 0; i < body_count; i++){
     hull_bodies_table.appendChild(add_body_group_header(i));
-    hull_bodies_table.appendChild(add_body_name(i));
+    hull_bodies_table.appendChild(add_body_name());
     
     const body_type_tr = add_body_type();
     hull_bodies_table.appendChild(body_type_tr);
@@ -80,58 +80,76 @@ function populate_bodies(body_count){
         body_tbody.removeChild(body_tbody.firstChild);
 
       if(body_type_select.value === 'a'){
-        body_tbody.appendChild(add_input_row('hull nose coordinates: ', 'hull-nose-coords', '20px'));
+        body_tbody.appendChild(add_input_row('hull nose coordinates: ', 'one-tab'));
       }
       else if(body_type_select.value === 'f'){
-        body_tbody.appendChild(add_input_row('one leading edge coordinates: ', 'one-lead-edge-coords', '20px'));
-        body_tbody.appendChild(add_input_row('other leading edge coordinates: ', 'other-lead-edge-coords', '20px'));
+        body_tbody.appendChild(add_input_row('one leading edge coordinates: ', 'one-tab'));
+        body_tbody.appendChild(add_input_row('other leading edge coordinates: ', 'one-tab'));
       }
       else{
         return;
       }
-      const ctrl_pts_tr = add_select_row('# of control points? ', '', {0:'0', 1:'1', 2:'2', 3:'3', 4:'4', 5:'5', 6:'6'}, '20px');
+      const ctrl_pts_tr = add_select_row('# of control points? ', null, {0:'0', 1:'1', 2:'2', 3:'3', 4:'4', 5:'5', 6:'6'}, 'one-tab');
       body_tbody.appendChild(ctrl_pts_tr);
 
       const ctrl_pts_select = ctrl_pts_tr.querySelector('select');
       ctrl_pts_select.addEventListener('change', () => {
 
         const ctr_point_trs = body_tbody.querySelectorAll('[data-ctr]');
-        
-        ctr_point_trs.forEach( (ctr_point_tr) => {
-          console.log('got here');
-          ctr_point_tr.remove();
-        });
+
+        ctr_point_trs.forEach( (ctr_point_tr) => { ctr_point_tr.remove(); });
 
         for (i = 0; i < ctrl_pts_select.value ; i++){
           
-          const tr_one = add_input_row('next hull control point coordinates: ', 'next-hull-ctrl-pt-coords', '20px');
-          tr_one.dataset.ctr = 'true';
+          const tr_one = add_text_row(`control point # ${i+1}`, 'one-tab');
+          tr_one.dataset.ctr = '';
+          tr_one.className = 'two-tabs-bold';
           body_tbody.appendChild(tr_one);
 
-          const tr_two = add_input_row('# of segements between control points: ', 'segments-between-ctrl-pts', '20px');
-          tr_two.dataset.ctr = 'true';
+          const tr_two = add_input_row('next hull control point coordinates: ', 'two-tabs');
+          tr_two.dataset.ctr = '';
           body_tbody.appendChild(tr_two);
+
+          const tr_three = add_select_row('# of segements between control points: ', 'sequence', num_segments_options, 'two-tabs');
+          tr_three.dataset.ctr = '';
+          body_tbody.appendChild(tr_three);
+
+          // Added to satisfy optjm.exe sequence for another ctrl pt coord (y/n)
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'sequence';
+          i === (ctrl_pts_select.value - 1) ? input.defaultValue = 'n' : input.defaultValue = 'y';
+          body_tbody.appendChild(input);
+
         }
       });
     });
+
+    // THIS NEEDS TO BE MOVED / FIXED!!!
+    // Added to satisfy optjm.exe sequence for another hull body (y/n)
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'sequence';
+    i === (body_count - 1) ? input.defaultValue = 'n' : input.defaultValue = 'y';
+    body_tbody.appendChild(input);
   }
 }
 
 function add_body_group_header(body_number){
 
-  return add_text_row(`body # ${body_number+1}`);
+  return add_text_row(`body # ${body_number+1}`, 'bold');
 
 }
 
-function add_body_name(body_number){
+function add_body_name(){
 
-  return add_input_row(`body name: `, 'sequence', '20px');
+  return add_input_row('body name: ', 'one-tab');
 
 }
 
 function add_body_type(){
 
-  return add_select_row(`body type: `, 'sequence', {'': '', axisymetric: 'a', foil: 'f'}, '20px');
+  return add_select_row(`body type: `, 'sequence', {'': '', axisymetric: 'a', foil: 'f'}, 'one-tab');
 
 }
 
@@ -141,25 +159,23 @@ function add_body_tbody(){
 
 }
 
-/////////////////////////////////
-
 function add_data_edits(){
-  table.appendChild(add_input_row(`43. longitudinal center of bouyancy [${xvfContent[42]}]: `, 'xvf', '0px'));
-  table.appendChild(add_input_row(`44. ship displacement (long tons) [${xvfContent[43]}]: `, 'xvf', '0px'));
-  table.appendChild(add_input_row(`45. opt. param. (1=drag, 2=height, 3=slope) [${xvfContent[44]}]: `, 'xvf', '0px'));
-  table.appendChild(add_input_row(`46. reasonablenes factor alpha (0<alpha<1) [${xvfContent[45]}]: `, 'xvf', '0px'));
+  table.appendChild(add_input_row(`43. longitudinal center of bouyancy [${xvfContent[42]}]: `));
+  table.appendChild(add_input_row(`44. ship displacement (long tons) [${xvfContent[43]}]: `));
+  table.appendChild(add_input_row(`45. opt. param. (1=drag, 2=height, 3=slope) [${xvfContent[44]}]: `));
+  table.appendChild(add_input_row(`46. reasonablenes factor alpha (0<alpha<1) [${xvfContent[45]}]: `));
 }
 
-function add_input_row (text_desc, name, padding_left) {
+function add_input_row (text_desc, css_class_name) {
   const td_a = document.createElement('td');
   td_a.innerText = text_desc;
-  td_a.style.paddingLeft = padding_left;
+  td_a.className = css_class_name;
   
   const input = document.createElement('input');
-  input.name = name;  
+  input.name = 'sequence';  
   
   const td_b = document.createElement('td');
-  td_b.style.paddingLeft = padding_left;
+  td_b.className = css_class_name;
   td_b.appendChild(input);
   
   const tr = document.createElement('tr');
@@ -169,14 +185,15 @@ function add_input_row (text_desc, name, padding_left) {
   return tr;
 }
 
-function add_select_row (text_desc, name, options, padding_left){
+function add_select_row (text_desc, name, options, css_class_name){
   
   const td_a = document.createElement('td');
   td_a.innerText = text_desc;
-  td_a.style.paddingLeft = padding_left;
+  td_a.className = css_class_name;
   
   const select = document.createElement('select');
-  select.name = name;
+  if(name)
+    select.name = name;
   for (const [key, value] of Object.entries(options)) {
     const option = document.createElement('option');
     option.innerHTML = key;
@@ -185,7 +202,7 @@ function add_select_row (text_desc, name, options, padding_left){
   }
   
   const td_b = document.createElement('td');
-  td_b.style.paddingLeft = padding_left;
+  td_b.className = css_class_name;
   td_b.appendChild(select);
 
   const tr = document.createElement('tr');
@@ -195,11 +212,11 @@ function add_select_row (text_desc, name, options, padding_left){
   return tr;
 }
 
-function add_text_row (text) {
+function add_text_row (text, css_class_name) {
 
   const td_a = document.createElement('td');
   td_a.innerText = text;
-  td_a.style.fontWeight = 'bold';
+  td_a.className = css_class_name;
   
   const td_b = document.createElement('td');
   
@@ -209,6 +226,11 @@ function add_text_row (text) {
 
   return tr;
 }
+
+// Up to 100 segments
+let num_segments_options = {};
+for (i = 1; i <= 100; i++)
+  num_segments_options[i] = i;
 
 // Browser back button
 window.addEventListener('pageshow', toggleDisplays);

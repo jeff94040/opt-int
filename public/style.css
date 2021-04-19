@@ -18,3 +18,20 @@ input[type='file']{
 legend{
 	font-weight: bold;
 }
+.bold{
+	font-weight: bold;
+}
+.one-tab{
+	padding-left: 20px;
+}
+.one-tab-bold{
+	padding-left: 20px;
+	font-weight: bold;
+}
+.two-tabs{
+	padding-left: 40px;
+}
+.two-tabs-bold{
+	padding-left: 40px;
+	font-weight: bold;
+}

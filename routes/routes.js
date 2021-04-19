@@ -145,7 +145,11 @@ router.post('/run', async (req, res) => {
   }
   else if(req.body.menu == 2){
   
-    const commands = ['testit', 'testit.op2', 'y', 'testit.stg', 'y', 'testit.wav', 'testit.shp', 'y', 'testit.hlg', 'y', 'k', req.body.label];
+    let commands = ['testit', 'testit.op2', 'y', 'testit.stg', 'y', 'testit.wav', 'testit.shp', 'y', 'testit.hlg', 'y', 'k'];
+
+    commands = commands.concat(req.body.sequence);
+
+    console.log(commands);
 
     // const ws = fs.createWriteStream('C:/OptInt/terminal-input.txt');
     // commands.forEach( (value) => {

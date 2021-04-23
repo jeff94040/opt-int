@@ -12,6 +12,12 @@ fieldset{
 input[type='file']{
 	width: 190px;
 }
+input[pattern]:invalid{
+	border: red solid 3px;
+}
+input[pattern]:valid{
+	border: green solid 3px;
+}
 .successful{
 	color: darkgreen;
 }

@@ -5,14 +5,21 @@ if(previousMenu)
 const menu = document.querySelector('#menu');
 
 // Add event listeners to all buttons. When a button is clicked, disable all buttons and submit the button's form.
-const buttons = document.querySelectorAll("button");
+const buttons = document.querySelectorAll('input[type=submit]');
 
 buttons.forEach( (button) => {
   button.addEventListener('click', () => {
-    buttons.forEach( (button) => { button.disabled = true; });
     menu.style.display='none';
     button.form.appendChild(menu);
-    button.form.submit();
+    let all_set = true;
+    button.form.querySelectorAll('input[required]').forEach( (elem) => {
+      if(!elem.value)
+        all_set = false;
+    });
+    if(all_set){
+      buttons.forEach( (button) => { button.disabled = true; });
+      button.form.submit();
+    }
   });
 });
 
@@ -52,18 +59,15 @@ const hull_body_count = document.querySelector('#hull-body-count');
 
 hull_body_count.addEventListener('change', () => {
 
-  populate_bodies(hull_body_count.value);
-
-});
-
-function populate_bodies(body_count){
-
   const hull_bodies_table = document.querySelector('#hull-bodies-table');
 
   while(hull_bodies_table.firstChild)
     hull_bodies_table.removeChild(hull_bodies_table.firstChild);
 
-  for(i = 0; i < body_count; i++){
+  if(!hull_body_count.value)
+    return;
+  
+  for(i = 0; i < hull_body_count.value; i++){
     hull_bodies_table.appendChild(add_body_group_header(i));
     hull_bodies_table.appendChild(add_body_name());
     
@@ -72,7 +76,14 @@ function populate_bodies(body_count){
     
     const body_tbody = add_body_tbody();
     hull_bodies_table.appendChild(body_tbody);
-    
+
+    // Added to satisfy optjm.exe sequence for another hull body (y/n)
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'sequence';
+    i === (hull_body_count.value - 1) ? input.defaultValue = 'n' : input.defaultValue = 'y';
+    hull_bodies_table.appendChild(input);
+
     const body_type_select = body_type_tr.querySelector('select');
     body_type_select.addEventListener('change', () => {
       //console.log('got here');
@@ -80,11 +91,11 @@ function populate_bodies(body_count){
         body_tbody.removeChild(body_tbody.firstChild);
 
       if(body_type_select.value === 'a'){
-        body_tbody.appendChild(add_input_row('hull nose coordinates: ', 'one-tab'));
+        body_tbody.appendChild(add_input_row('hull nose coordinates: ', 'one-tab', true, true));
       }
       else if(body_type_select.value === 'f'){
-        body_tbody.appendChild(add_input_row('one leading edge coordinates: ', 'one-tab'));
-        body_tbody.appendChild(add_input_row('other leading edge coordinates: ', 'one-tab'));
+        body_tbody.appendChild(add_input_row('one leading edge coordinates: ', 'one-tab', true, true));
+        body_tbody.appendChild(add_input_row('other leading edge coordinates: ', 'one-tab', true, true));
       }
       else{
         return;
@@ -106,7 +117,7 @@ function populate_bodies(body_count){
           tr_one.className = 'two-tabs-bold';
           body_tbody.appendChild(tr_one);
 
-          const tr_two = add_input_row('next hull control point coordinates: ', 'two-tabs');
+          const tr_two = add_input_row('next hull control point coordinates: ', 'two-tabs', true, true);
           tr_two.dataset.ctr = '';
           body_tbody.appendChild(tr_two);
 
@@ -124,16 +135,9 @@ function populate_bodies(body_count){
         }
       });
     });
-
-    // THIS NEEDS TO BE MOVED / FIXED!!!
-    // Added to satisfy optjm.exe sequence for another hull body (y/n)
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'sequence';
-    i === (body_count - 1) ? input.defaultValue = 'n' : input.defaultValue = 'y';
-    body_tbody.appendChild(input);
   }
-}
+  hull_bodies_table.appendChild(add_data_edits());
+});
 
 function add_body_group_header(body_number){
 
@@ -143,13 +147,13 @@ function add_body_group_header(body_number){
 
 function add_body_name(){
 
-  return add_input_row('body name: ', 'one-tab');
+  return add_input_row('body name: ', 'one-tab', true, false);
 
 }
 
 function add_body_type(){
 
-  return add_select_row(`body type: `, 'sequence', {'': '', axisymetric: 'a', foil: 'f'}, 'one-tab');
+  return add_select_row(`body type: `, 'sequence', {axisymetric: 'a', foil: 'f'}, 'one-tab');
 
 }
 
@@ -160,19 +164,29 @@ function add_body_tbody(){
 }
 
 function add_data_edits(){
-  table.appendChild(add_input_row(`43. longitudinal center of bouyancy [${xvfContent[42]}]: `));
-  table.appendChild(add_input_row(`44. ship displacement (long tons) [${xvfContent[43]}]: `));
-  table.appendChild(add_input_row(`45. opt. param. (1=drag, 2=height, 3=slope) [${xvfContent[44]}]: `));
-  table.appendChild(add_input_row(`46. reasonablenes factor alpha (0<alpha<1) [${xvfContent[45]}]: `));
+  const tbody = document.createElement('tbody');
+  tbody.appendChild(add_text_row('edit vector data', 'bold'));
+  tbody.appendChild(add_input_row(`43. longitudinal center of bouyancy [${xvfContent[42]}]: `, null, false, false));
+  tbody.appendChild(add_input_row(`44. ship displacement (long tons) [${xvfContent[43]}]: `, null, false, false));
+  tbody.appendChild(add_input_row(`45. opt. param. (1=drag, 2=height, 3=slope) [${xvfContent[44]}]: `, null, false, false));
+  tbody.appendChild(add_input_row(`46. reasonablenes factor alpha (0<alpha<1) [${xvfContent[45]}]: `, null, false, false));
+  return tbody;
 }
 
-function add_input_row (text_desc, css_class_name) {
+function add_input_row (text_desc, css_class_name, required, coordinate) {
   const td_a = document.createElement('td');
   td_a.innerText = text_desc;
-  td_a.className = css_class_name;
+  if(css_class_name)
+    td_a.className = css_class_name;
   
   const input = document.createElement('input');
-  input.name = 'sequence';  
+  input.name = 'sequence';
+  input.required = required;
+  if(coordinate){
+    input.placeholder = 'X,Y,Z';
+    input.pattern = '-?\\d{1,3},-?\\d{1,3},-?\\d{1,3}';
+    //input.title = "X,Y,Z";
+  }
   
   const td_b = document.createElement('td');
   td_b.className = css_class_name;
@@ -192,8 +206,11 @@ function add_select_row (text_desc, name, options, css_class_name){
   td_a.className = css_class_name;
   
   const select = document.createElement('select');
+  select.required = true;
   if(name)
     select.name = name;
+  // Default null option
+  select.appendChild(document.createElement('option'));
   for (const [key, value] of Object.entries(options)) {
     const option = document.createElement('option');
     option.innerHTML = key;

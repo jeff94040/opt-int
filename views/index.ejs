@@ -43,7 +43,8 @@
           <td class='successful'><%=xvf.uploaded ? ' | upload successful' : ''%></td>
         </tr>
       </table>
-      <button>Upload File/s</button>
+      <input type="submit" value="Upload File/s">
+      <!--<button>Upload File's</button>-->
     </form>
     <form data-menu-2 enctype="multipart/form-data" action="/upload" method="post" style="display:none">
       <table>
@@ -115,7 +116,8 @@
           <td class='successful'> <%=vvf.uploaded ? ' | upload successful' : ''%></td>
         </tr>
       </table>
-      <button>Upload File/s</button>
+      <input type="submit" value="Upload File/s">
+      <!--<button>Upload File/s</button>-->
     </form>    
   </fieldset>
   <!-- Data edits -->
@@ -129,16 +131,17 @@
         <tr><td>3. optimization velocity (knots): </td><td>[<%=xvf.content[2]%>]</td><td><input name="xvf" placeholder="e.g. 12"></td></tr>
         <tr><td>4. overall ship length (for spectral range): </td><td>[<%=xvf.content[3]%>]</td><td><input name="xvf" placeholder="e.g. 140"></td></tr>
       </table>
-      <button>Run Kelvin Wake Process</button>
+      <input type="submit" value="Run Kelvin Wake Process">
+      <!--<button>Run Kelvin Wake Process</button>-->
     </form>
     <form data-menu-2 action="/run" method="post" style="display:none;">
       <table id='option-2-table'>
-        <tr><td>submerged hull geometry file label: </td><td><input type="text" name="sequence" value="label"></td></tr>
+        <tr><td>submerged hull geometry file label: </td><td><input type="text" name="sequence" required></td></tr>
         <tr>
           <td>number of hull bodies: </td>
           <td>
-            <select id="hull-body-count">
-              <option value="0">0</option>
+            <select id="hull-body-count" required>
+              <option></option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -153,16 +156,9 @@
         </tr>
       </table>
       <table id='hull-bodies-table'>
+        <!-- populated dynamically by JS -->
       </table>
-      <button>Run Hull Optimization Process</button>
-
-        <!--
-        <tr><td>43. longitudinal center of bouyancy [<%=xvf.content[42]%>]: </td><td><input type="text" name="xvf"></td></tr>
-        <tr><td>44. ship displacement (long tons) [<%=xvf.content[43]%>]: </td><td><input type="text" name="xvf"></td></tr>
-        <tr><td>45. opt. param. (1=drag, 2=height, 3=slope) [<%=xvf.content[44]%>]: </td><td><input type="text" name="xvf"></td></tr>
-        <tr><td>46. reasonablenes factor alpha (0&lt;alpha&lt;1) [<%=xvf.content[45]%>]: </td><td><input type="text" name="xvf"></td></tr>
-        -->
-      </table>
+      <input type="submit" value="Run Hull Optimization Process">
     </form>
     <form data-menu-3 action='/run' method='post' style="display:none">
       <table>
@@ -255,7 +251,8 @@
         <tr><td>velocity #48: </td><td>[<%=vvf.content[48]%>]</td><td><input name="vvf"></td></tr>
         <tr><td>velocity #49: </td><td>[<%=vvf.content[49]%>]</td><td><input name="vvf"></td></tr>
       </table>
-      <button>Run Resistance Predictions Process</button>
+      <input type="submit" value="Run Resistance Predictions Process">
+      <!--<button>Run Resistance Predictions Process</button>-->
     </form>
   </fieldset>
   <!-- Output files -->

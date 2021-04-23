@@ -1,6 +1,6 @@
 // Pull previous menu selection from server reply and set selected attribute
-if(previousMenu)
-  document.querySelector('#menu').options[previousMenu].selected = true;
+if(previous_menu)
+  document.querySelector('#menu').options[previous_menu].selected = true;
 
 const menu = document.querySelector('#menu');
 
@@ -9,10 +9,16 @@ const buttons = document.querySelectorAll('input[type=submit]');
 
 buttons.forEach( (button) => {
   button.addEventListener('click', () => {
-    menu.style.display='none';
-    button.form.appendChild(menu);
+
+    // Add menu selection to form post
+    const menu_copy = document.createElement('input');
+    menu_copy.type = 'hidden';
+    menu_copy.name = 'menu';
+    menu_copy.defaultValue = menu.value;
+    button.form.appendChild(menu_copy);
+
     let all_set = true;
-    button.form.querySelectorAll('input[required]').forEach( (elem) => {
+    button.form.querySelectorAll('[required]').forEach( (elem) => {
       if(!elem.value)
         all_set = false;
     });
@@ -23,37 +29,16 @@ buttons.forEach( (button) => {
   });
 });
 
-const dataMenuOne = document.querySelectorAll('[data-menu-1]');
-const dataMenuTwo = document.querySelectorAll('[data-menu-2]');
-const dataMenuThree = document.querySelectorAll('[data-menu-3]');
+menu.addEventListener('change', toggle_displays);
 
-menu.addEventListener('change', toggleDisplays);
-
-function toggleDisplays () {
-  if(menu.value === '1'){
-    dataMenuOne.forEach( (elem) => { elem.style.display='inline'; });
-    dataMenuTwo.forEach( (elem) => { elem.style.display='none'; });
-    dataMenuThree.forEach( (elem) => { elem.style.display='none'; });
-  }
-  else if(menu.value === '2'){
-    dataMenuOne.forEach( (elem) => { elem.style.display='none'; });
-    dataMenuTwo.forEach( (elem) => { elem.style.display='inline'; });
-    dataMenuThree.forEach( (elem) => { elem.style.display='none'; });
-    //add_body_name_and_shape();
-  }
-  else if(menu.value === '3'){
-    dataMenuOne.forEach( (elem) => { elem.style.display='none'; });
-    dataMenuTwo.forEach( (elem) => { elem.style.display='none'; });
-    dataMenuThree.forEach( (elem) => { elem.style.display='inline'; });    
-  }
-  else {
-    dataMenuOne.forEach( (elem) => { elem.style.display='none'; });
-    dataMenuTwo.forEach( (elem) => { elem.style.display='none'; });
-    dataMenuThree.forEach( (elem) => { elem.style.display='none'; });    
-  }
+function toggle_displays () {
+  document.querySelectorAll('[data-menu]').forEach( (elem) => {
+    if(elem.dataset.menu === menu.value)
+      elem.style.display = 'inline';
+    else
+      elem.style.display = 'none';
+  });
 };
-
-/////////////////////////////////
 
 const hull_body_count = document.querySelector('#hull-body-count');
 
@@ -91,16 +76,16 @@ hull_body_count.addEventListener('change', () => {
         body_tbody.removeChild(body_tbody.firstChild);
 
       if(body_type_select.value === 'a'){
-        body_tbody.appendChild(add_input_row('hull nose coordinates: ', 'one-tab', true, true));
+        body_tbody.appendChild(add_input_row('hull nose coordinates: ', 'one-tab', true, true, null));
       }
       else if(body_type_select.value === 'f'){
-        body_tbody.appendChild(add_input_row('one leading edge coordinates: ', 'one-tab', true, true));
-        body_tbody.appendChild(add_input_row('other leading edge coordinates: ', 'one-tab', true, true));
+        body_tbody.appendChild(add_input_row('one leading edge coordinates: ', 'one-tab', true, true, null));
+        body_tbody.appendChild(add_input_row('other leading edge coordinates: ', 'one-tab', true, true, null));
       }
       else{
         return;
       }
-      const ctrl_pts_tr = add_select_row('# of control points? ', null, {0:'0', 1:'1', 2:'2', 3:'3', 4:'4', 5:'5', 6:'6'}, 'one-tab');
+      const ctrl_pts_tr = add_select_row('# of control points? ', null, {1:'1', 2:'2', 3:'3', 4:'4', 5:'5', 6:'6'}, 'one-tab');
       body_tbody.appendChild(ctrl_pts_tr);
 
       const ctrl_pts_select = ctrl_pts_tr.querySelector('select');
@@ -112,12 +97,12 @@ hull_body_count.addEventListener('change', () => {
 
         for (i = 0; i < ctrl_pts_select.value ; i++){
           
-          const tr_one = add_text_row(`control point # ${i+1}`, 'one-tab');
+          const tr_one = add_text_row(`control point # ${i+1}`, '', 'one-tab');
           tr_one.dataset.ctr = '';
           tr_one.className = 'two-tabs-bold';
           body_tbody.appendChild(tr_one);
 
-          const tr_two = add_input_row('next hull control point coordinates: ', 'two-tabs', true, true);
+          const tr_two = add_input_row('next hull control point coordinates: ', 'two-tabs', true, true, null);
           tr_two.dataset.ctr = '';
           body_tbody.appendChild(tr_two);
 
@@ -129,6 +114,7 @@ hull_body_count.addEventListener('change', () => {
           const input = document.createElement('input');
           input.type = 'hidden';
           input.name = 'sequence';
+          input.dataset.ctr = '';
           i === (ctrl_pts_select.value - 1) ? input.defaultValue = 'n' : input.defaultValue = 'y';
           body_tbody.appendChild(input);
 
@@ -141,13 +127,13 @@ hull_body_count.addEventListener('change', () => {
 
 function add_body_group_header(body_number){
 
-  return add_text_row(`body # ${body_number+1}`, 'bold');
+  return add_text_row(`body # ${body_number+1}`, '', 'bold');
 
 }
 
 function add_body_name(){
 
-  return add_input_row('body name: ', 'one-tab', true, false);
+  return add_input_row('body name: ', 'one-tab', true, false, null);
 
 }
 
@@ -165,15 +151,15 @@ function add_body_tbody(){
 
 function add_data_edits(){
   const tbody = document.createElement('tbody');
-  tbody.appendChild(add_text_row('edit vector data', 'bold'));
-  tbody.appendChild(add_input_row(`43. longitudinal center of bouyancy [${xvfContent[42]}]: `, null, false, false));
-  tbody.appendChild(add_input_row(`44. ship displacement (long tons) [${xvfContent[43]}]: `, null, false, false));
-  tbody.appendChild(add_input_row(`45. opt. param. (1=drag, 2=height, 3=slope) [${xvfContent[44]}]: `, null, false, false));
-  tbody.appendChild(add_input_row(`46. reasonablenes factor alpha (0<alpha<1) [${xvfContent[45]}]: `, null, false, false));
+  tbody.appendChild(add_text_row('testit.xvf - edit vector data', 'current value', 'bold'));
+  tbody.appendChild(add_input_row(`43. longitudinal center of bouyancy: `, null, false, false, Number(xvf_content_arr[42])));
+  tbody.appendChild(add_input_row(`44. ship displacement (long tons): `, null, false, false, Number(xvf_content_arr[43])));
+  tbody.appendChild(add_input_row(`45. opt. param. (1=drag, 2=height, 3=slope): `, null, false, false, Number(xvf_content_arr[44])));
+  tbody.appendChild(add_input_row(`46. reasonablenes factor alpha (0<alpha<1): `, null, false, false, Number(xvf_content_arr[45])));
   return tbody;
 }
 
-function add_input_row (text_desc, css_class_name, required, coordinate) {
+function add_input_row (text_desc, css_class_name, required, coordinate, value) {
   const td_a = document.createElement('td');
   td_a.innerText = text_desc;
   if(css_class_name)
@@ -182,10 +168,11 @@ function add_input_row (text_desc, css_class_name, required, coordinate) {
   const input = document.createElement('input');
   input.name = 'sequence';
   input.required = required;
+  if(value)
+    input.defaultValue = value; 
   if(coordinate){
     input.placeholder = 'X,Y,Z';
-    input.pattern = '-?\\d{1,3},-?\\d{1,3},-?\\d{1,3}';
-    //input.title = "X,Y,Z";
+    input.pattern = '-?\\d{1,4}(\\.\\d{1,2})?,-?\\d{1,4}(\\.\\d{1,2})?,-?\\d{1,4}(\\.\\d{1,2})?';    
   }
   
   const td_b = document.createElement('td');
@@ -229,13 +216,15 @@ function add_select_row (text_desc, name, options, css_class_name){
   return tr;
 }
 
-function add_text_row (text, css_class_name) {
+function add_text_row (td_1_text, td_2_text, css_class_name) {
 
   const td_a = document.createElement('td');
-  td_a.innerText = text;
+  td_a.innerText = td_1_text;
   td_a.className = css_class_name;
   
   const td_b = document.createElement('td');
+  td_b.innerText = td_2_text;
+  td_b.className = css_class_name;
   
   const tr = document.createElement('tr');
   tr.appendChild(td_a);
@@ -250,4 +239,4 @@ for (i = 1; i <= 100; i++)
   num_segments_options[i] = i;
 
 // Browser back button
-window.addEventListener('pageshow', toggleDisplays);
+window.addEventListener('pageshow', toggle_displays);

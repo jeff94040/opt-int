@@ -1,33 +1,9 @@
-// Pull previous menu selection from server reply and set selected attribute
+// Default menu to previous menu selection if received from server reply
 if(previous_menu)
   document.querySelector('#menu').options[previous_menu].selected = true;
 
+// Toggle section displays based on menu selection
 const menu = document.querySelector('#menu');
-
-// Add event listeners to all buttons. When a button is clicked, disable all buttons and submit the button's form.
-const buttons = document.querySelectorAll('input[type=submit]');
-
-buttons.forEach( (button) => {
-  button.addEventListener('click', () => {
-
-    // Add menu selection to form post
-    const menu_copy = document.createElement('input');
-    menu_copy.type = 'hidden';
-    menu_copy.name = 'menu';
-    menu_copy.defaultValue = menu.value;
-    button.form.appendChild(menu_copy);
-
-    let all_set = true;
-    button.form.querySelectorAll('[required]').forEach( (elem) => {
-      if(!elem.value)
-        all_set = false;
-    });
-    if(all_set){
-      buttons.forEach( (button) => { button.disabled = true; });
-      button.form.submit();
-    }
-  });
-});
 
 menu.addEventListener('change', toggle_displays);
 
@@ -40,26 +16,65 @@ function toggle_displays () {
   });
 };
 
+// Button event listeners
+const buttons = document.querySelectorAll('input[type=submit]');
+
+buttons.forEach( (button) => {
+  button.addEventListener('click', () => {
+
+    // Add menu selection to form
+    const menu_copy = document.createElement('input');
+    menu_copy.type = 'hidden';
+    menu_copy.name = 'menu';
+    menu_copy.defaultValue = menu.value;
+    button.form.appendChild(menu_copy);
+
+    // Check to ensure all required form fields are populated
+    let all_set = true;
+    button.form.querySelectorAll('[required]').forEach( (elem) => {
+      if(!elem.value)
+        all_set = false;
+    });
+
+    // If all required fields are populated, disable all buttons and submit form
+    if(all_set){
+      buttons.forEach( (button) => { button.disabled = true; });
+      button.form.submit();
+    }
+  });
+});
+
+// Add event listener to # hull bodies dropdown menu
 const hull_body_count = document.querySelector('#hull-body-count');
 
 hull_body_count.addEventListener('change', () => {
 
+  // Select hull bodies table where all dynamic content will be populated
   const hull_bodies_table = document.querySelector('#hull-bodies-table');
 
+  // Remove all table children (start from scratch)
   while(hull_bodies_table.firstChild)
     hull_bodies_table.removeChild(hull_bodies_table.firstChild);
 
+  // Return if blank menu option selected
   if(!hull_body_count.value)
     return;
-  
+
+  // For each body
   for(i = 0; i < hull_body_count.value; i++){
-    hull_bodies_table.appendChild(add_body_group_header(i));
-    hull_bodies_table.appendChild(add_body_name());
+
+    // Add body # text row in bold
+    hull_bodies_table.appendChild(add_text_row(`body # ${i + 1}`, '', 'bold'));
+
+    // Add body name input row
+    hull_bodies_table.appendChild(add_input_row('body name: ', 'one-tab', true, false, null));
     
-    const body_type_tr = add_body_type();
+    // Add body type select row
+    const body_type_tr = add_select_row(`body type: `, 'sequence', {axisymetric: 'a', foil: 'f'}, 'one-tab');
     hull_bodies_table.appendChild(body_type_tr);
     
-    const body_tbody = add_body_tbody();
+    // Add tbody to be further populated and provide reference to delete all child elements
+    const body_tbody = document.createElement('tbody');
     hull_bodies_table.appendChild(body_tbody);
 
     // Added to satisfy optjm.exe sequence for another hull body (y/n)
@@ -69,43 +84,52 @@ hull_body_count.addEventListener('change', () => {
     i === (hull_body_count.value - 1) ? input.defaultValue = 'n' : input.defaultValue = 'y';
     hull_bodies_table.appendChild(input);
 
-    const body_type_select = body_type_tr.querySelector('select');
-    body_type_select.addEventListener('change', () => {
-      //console.log('got here');
+    // Add event listener to body type (a/f) dropdown menu
+    body_type_tr.querySelector('select').addEventListener('change', (event) => {
+
+      // First remove all child elements from tbody (start from scratch)
       while(body_tbody.firstChild)
         body_tbody.removeChild(body_tbody.firstChild);
 
-      if(body_type_select.value === 'a'){
+      // Populate elements depending on a/f selection, exit if blank
+      if(event.target.value === 'a'){
         body_tbody.appendChild(add_input_row('hull nose coordinates: ', 'one-tab', true, true, null));
       }
-      else if(body_type_select.value === 'f'){
+      else if(event.target.value === 'f'){
         body_tbody.appendChild(add_input_row('one leading edge coordinates: ', 'one-tab', true, true, null));
         body_tbody.appendChild(add_input_row('other leading edge coordinates: ', 'one-tab', true, true, null));
       }
       else{
         return;
       }
+
+      // Add # of control points row
       const ctrl_pts_tr = add_select_row('# of control points? ', null, {1:'1', 2:'2', 3:'3', 4:'4', 5:'5', 6:'6'}, 'one-tab');
       body_tbody.appendChild(ctrl_pts_tr);
 
-      const ctrl_pts_select = ctrl_pts_tr.querySelector('select');
-      ctrl_pts_select.addEventListener('change', () => {
+      // Add event listener to control points dropdown menu
+      ctrl_pts_tr.querySelector('select').addEventListener('change', (event) => {
 
-        const ctr_point_trs = body_tbody.querySelectorAll('[data-ctr]');
+        // Remove all elems with data-ctr attribute (start from scratch)
+        body_tbody.querySelectorAll('[data-ctr]').forEach( (ctr_point_tr) => { 
+          ctr_point_tr.remove(); 
+        });
 
-        ctr_point_trs.forEach( (ctr_point_tr) => { ctr_point_tr.remove(); });
-
-        for (i = 0; i < ctrl_pts_select.value ; i++){
+        // For each control point
+        for (i = 0; i < event.target.value ; i++){
           
+          // Add control point # text row
           const tr_one = add_text_row(`control point # ${i+1}`, '', 'one-tab');
           tr_one.dataset.ctr = '';
           tr_one.className = 'two-tabs-bold';
           body_tbody.appendChild(tr_one);
 
+          // Add control point coords row
           const tr_two = add_input_row('next hull control point coordinates: ', 'two-tabs', true, true, null);
           tr_two.dataset.ctr = '';
           body_tbody.appendChild(tr_two);
 
+          // Add control point # of segments row
           const tr_three = add_select_row('# of segements between control points: ', 'sequence', num_segments_options, 'two-tabs');
           tr_three.dataset.ctr = '';
           body_tbody.appendChild(tr_three);
@@ -115,39 +139,16 @@ hull_body_count.addEventListener('change', () => {
           input.type = 'hidden';
           input.name = 'sequence';
           input.dataset.ctr = '';
-          i === (ctrl_pts_select.value - 1) ? input.defaultValue = 'n' : input.defaultValue = 'y';
+          i === (event.target.value - 1) ? input.defaultValue = 'n' : input.defaultValue = 'y';
           body_tbody.appendChild(input);
 
         }
       });
     });
   }
+  // After all dynamic inputs are populated, add vector data inputs
   hull_bodies_table.appendChild(add_data_edits());
 });
-
-function add_body_group_header(body_number){
-
-  return add_text_row(`body # ${body_number+1}`, '', 'bold');
-
-}
-
-function add_body_name(){
-
-  return add_input_row('body name: ', 'one-tab', true, false, null);
-
-}
-
-function add_body_type(){
-
-  return add_select_row(`body type: `, 'sequence', {axisymetric: 'a', foil: 'f'}, 'one-tab');
-
-}
-
-function add_body_tbody(){
-
-  return document.createElement('tbody');
-
-}
 
 function add_data_edits(){
   const tbody = document.createElement('tbody');

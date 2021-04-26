@@ -112,6 +112,14 @@ router.get('/', (req, res) => {
 
 });
 
+// Render bootstrapped homepage
+// Render homepage
+router.get('/index-bootstrapped', (req, res) => {
+  
+  res.render('index-bootstrapped', generate_metrics(req));
+
+});
+
 // Upload file then render homepage
 // github.com/richardgirges/express-fileupload/tree/master/example#basic-file-upload
 router.post('/upload', async (req, res) => {

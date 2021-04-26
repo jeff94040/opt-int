@@ -41,3 +41,22 @@ legend{
 	padding-left: 40px;
 	font-weight: bold;
 }
+caption{
+	font-weight: bold;
+	color: black;
+}
+h6{
+	font-weight: bold;
+}
+ul{
+	list-style-type: none;
+}
+li{
+	margin-bottom: 1rem;
+}
+div.d-inline-flex{
+	margin-bottom: 4px;
+}
+/*form[data-menu='1'] */div.d-inline-flex input.form-control {
+	min-width: 300px;
+}

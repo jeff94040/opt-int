@@ -57,6 +57,14 @@ li{
 div.d-inline-flex{
 	margin-bottom: 4px;
 }
-/*form[data-menu='1'] */div.d-inline-flex input.form-control {
-	min-width: 300px;
+div.d-inline-flex input.form-control {
+	min-width: 325px;
+}
+.container-title {
+	font-size: 20px;
+	font-weight: 700;
+	margin-bottom: 1rem;
+}
+input[type='file'] {
+	width: 200px;
 }

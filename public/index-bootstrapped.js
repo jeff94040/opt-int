@@ -17,7 +17,8 @@ function toggle_displays () {
 };
 
 // Button event listeners
-const buttons = document.querySelectorAll('input[type=submit]');
+// const buttons = document.querySelectorAll('input[type=submit]');
+const buttons = document.querySelectorAll('button');
 
 buttons.forEach( (button) => {
   button.addEventListener('click', () => {
@@ -43,6 +44,8 @@ buttons.forEach( (button) => {
     }
   });
 });
+
+/* Remaining code dynamically populates sequence for option #2 */
 
 // Add event listener to # hull bodies dropdown menu
 const hull_body_count = document.querySelector('#hull-body-count');

@@ -1,16 +1,5 @@
-/*
-body *{
-	font-family:monospace;
-}
-*/
-fieldset{
-	width: auto;
-}
 #upload-xvf-input{
 	display:none
-}
-input[type='file']{
-	width: 190px;
 }
 input[pattern]:invalid{
 	border: red solid 3px;
@@ -20,9 +9,6 @@ input[pattern]:valid{
 }
 .successful{
 	color: darkgreen;
-}
-legend{
-	font-weight: bold;
 }
 .bold{
 	font-weight: bold;
@@ -41,30 +27,42 @@ legend{
 	padding-left: 40px;
 	font-weight: bold;
 }
-caption{
-	font-weight: bold;
-	color: black;
-}
-h6{
-	font-weight: bold;
-}
 ul{
 	list-style-type: none;
 }
 li{
 	margin-bottom: 1rem;
+	/*width: fit-content;*/
 }
-div.d-inline-flex{
+div.d-inline-flex {
 	margin-bottom: 4px;
-}
-div.d-inline-flex input.form-control {
-	min-width: 325px;
 }
 .container-title {
 	font-size: 20px;
 	font-weight: 700;
 	margin-bottom: 1rem;
 }
-input[type='file'] {
-	width: 200px;
+.hull-title{
+	font-size: 16px;
+	font-weight: 700;
+	margin-bottom: 1rem;
+	white-space: nowrap;
+}
+input[type='text']{
+	width: 300px;
+}
+div[data-menu='2'] select{
+	width: 300px !important;
+}
+div[data-menu='2'] div{
+	margin-bottom: 4px;
+}
+div.hull-capsule {
+	margin-left: 2rem;
+}
+label{
+	white-space: nowrap;
+}
+form > ul {
+	padding-left: 0px;
 }

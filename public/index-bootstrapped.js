@@ -244,3 +244,91 @@ for (i = 1; i <= 100; i++)
 
 // Browser back button
 window.addEventListener('pageshow', toggle_displays);
+
+/** BRAND NEW */
+
+const hull_count_e = document.querySelector('#hull-count');
+hull_count_e.addEventListener('change', () => {
+
+  const hulls = document.querySelector('#hulls');
+
+  // Remove all table children (start from scratch)
+  while(hulls.firstChild)
+    hulls.removeChild(hulls.firstChild); 
+
+  for(i = 0; i < hull_count_e.value; i++){
+    
+    const hull_capsule_e = create_div('hull-capsule', null);
+
+    const hull_title_e = create_div('hull-title', `Body #${i+1}`)
+
+    const form_floating_e_1 = create_div('form-floating', null);
+    
+    const form_control_e_1 = document.createElement('input');
+    form_control_e_1.type = 'text';
+    form_control_e_1.name = 'sequence';
+    form_control_e_1.className = 'form-control';
+
+    const label_e_1 = create_label('name');
+    
+    const form_floating_e_2 = create_div('form-floating', null);
+
+    const hull_type_e = document.createElement('select');
+    hull_type_e.className = 'form-select';
+    hull_type_e.name = 'sequence';
+
+    const option_1 = create_option('', '');
+    
+    const option_2 = create_option('a', 'axisymetric');
+
+    const option_3 = create_option('f', 'foil');
+
+    const label_e_2 = create_label('body type');
+
+    // Added to satisfy optjm.exe sequence for another hull body (y/n)
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'sequence';
+    i === (hull_count_e.value - 1) ? input.defaultValue = 'n' : input.defaultValue = 'y';
+
+    hull_capsule_e.appendChild(hull_title_e);
+
+    form_floating_e_1.appendChild(form_control_e_1);
+    form_floating_e_1.appendChild(label_e_1);
+    hull_capsule_e.appendChild(form_floating_e_1);
+
+    hull_type_e.appendChild(option_1);
+    hull_type_e.appendChild(option_2);
+    hull_type_e.appendChild(option_3);
+
+    form_floating_e_2.appendChild(hull_type_e);
+    form_floating_e_2.appendChild(label_e_2);
+    hull_capsule_e.appendChild(form_floating_e_2);
+
+    hull_capsule_e.appendChild(input);
+
+    hulls.appendChild(hull_capsule_e);
+    //console.log(hull_capsule_e);
+  }
+
+});
+
+function create_div (class_name, inner_html){
+  const div = document.createElement('div');
+  div.className = class_name;
+  div.innerHTML = inner_html;
+  return div;
+}
+
+function create_label (inner_html){
+  const label = document.createElement('label');
+  label.innerHTML = inner_html;
+  return label;
+}
+
+function create_option (value, inner_html){
+  const option = document.createElement('option');
+  option.value = value;
+  option.innerHTML = inner_html;
+  return option;
+}

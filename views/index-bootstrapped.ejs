@@ -16,7 +16,7 @@
       <select class="form-select" id="menu" name="menu">
         <option value="0">Select a process to run:</option>
         <option value="1">Kelvin Wake</option>
-        <option value="2">Hull Optimization</option>
+        <option value="2" selected>Hull Optimization</option>
         <option value="3">Resistance Predictions</option>
       </select>
     </div>
@@ -244,6 +244,85 @@
         <input type="text" class="form-control" name="xvf" data-vvf="3">
         <label class="form-label">Overall ship length (for spectral range)</label>
       </div>
+      <div>
+        <button class="btn btn-primary btn-sm mt-2" type="button">Run Kelvin Wake Process</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Hull optimization (option 2) sequence input container -->
+  <div class="container-fluid mt-3 mb-3" data-menu="2">
+    <form action="/run" method="post">
+      <div class="container-title">Hull Geometry</div>
+      <div class="form-floating">
+        <input type="text" class="form-control" name="sequence" required>
+        <label>submerged hull geometry file label</label>
+      </div>
+      <div class="form-floating">
+        <select class="form-select" id="hull-count" required>
+          <option value="0"></option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+        </select>   
+        <label>number of hull bodies</label>
+      </div>
+      <div id="hulls">
+        <!--
+        <div class="hull-capsule">
+          <div class="hull-title">Body #1</div>
+          <div class="form-floating">
+            <input type="text" class="form-control" name="sequence">
+            <label>name</label>
+          </div>
+          <div class="form-floating">
+            <select class="form-select">
+              <option value=""></option>
+              <option value="a">axisymetric</option>
+              <option value="f">foil</option>
+            </select>
+            <label>body type</label>
+          </div>
+        </div>
+        -->
+      </div>
+      
+      <table id='option-2-table'>
+        <tr>
+          <td>submerged hull geometry file label: </td>
+          <td><input type="text" name="sequence" required></td>
+        </tr>
+        <tr>
+          <td>number of hull bodies: </td>
+          <td>
+            <select id="hull-body-count" required>
+              <option></option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+      <table id='hull-bodies-table'></table>
+      <div>
+        <button class="btn btn-primary btn-sm mt-2" type="button">Run Hull Optimization Process</button>
+      </div>
+      
+    </form>
+  </div>
       <!--
       <ul class="list-group">
         <li><h6>Kelvin Wake Vector Data</h6> </div>
@@ -288,44 +367,6 @@
         </div>
       </ul>
       -->
-      <div>
-        <button class="btn btn-primary btn-sm mt-2" type="button">Run Kelvin Wake Process</button>
-      </div>
-    </form>
-  </div>
-
-  <!-- Hull optimization (option 2) sequence input container -->
-  <div class="container-fluid mt-3 mb-3" data-menu="2">
-    <form action="/run" method="post">
-      <table id='option-2-table'>
-        <tr>
-          <td>submerged hull geometry file label: </td>
-          <td><input type="text" name="sequence" required></td>
-        </tr>
-        <tr>
-          <td>number of hull bodies: </td>
-          <td>
-            <select id="hull-body-count" required>
-              <option></option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-            </select>
-          </td>
-        </tr>
-      </table>
-      <table id='hull-bodies-table'></table>
-      <div>
-        <button class="btn btn-primary btn-sm mt-2" type="button">Run Hull Optimization Process</button>
-      </div>
-    </form>
-  </div>
 
   <!-- Resistance predictions (option 3) sequence input container -->
   <div class="container-fluid mt-3 mb-3" data-menu="3">

@@ -12,13 +12,13 @@ function age_since_mod(filePath, now){
   const diff = (now - then) / 1000;
 
   if (diff < 60) // < 1 minute
-    return `file last modified ${Math.trunc(diff)} seconds ago`;
+    return `${Math.trunc(diff)} seconds ago`;
   else if (diff < (60 * 60)) // < 1 hour
-    return `file last modified ${Math.trunc(diff / 60)} minutes ago`;
+    return `${Math.trunc(diff / 60)} minutes ago`;
   else if (diff < (60 * 60 * 24)) // < 1 day
-    return `file last modified ${Math.trunc(diff / (60 * 60))} hours ago`;
+    return `${Math.trunc(diff / (60 * 60))} hours ago`;
   else
-    return `file last modified ${Math.trunc(diff / (60 * 60 * 24))} days ago`;
+    return `${Math.trunc(diff / (60 * 60 * 24))} days ago`;
 }
 
 function write_terminal_input_file(commands){

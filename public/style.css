@@ -1,38 +1,8 @@
-#upload-xvf-input{
-	display:none
-}
 input[pattern]:invalid{
 	border: red solid 3px;
 }
 input[pattern]:valid{
 	border: green solid 3px;
-}
-.successful{
-	color: darkgreen;
-}
-.bold{
-	font-weight: bold;
-}
-.one-tab{
-	padding-left: 20px;
-}
-.one-tab-bold{
-	padding-left: 20px;
-	font-weight: bold;
-}
-.two-tabs{
-	padding-left: 40px;
-}
-.two-tabs-bold{
-	padding-left: 40px;
-	font-weight: bold;
-}
-ul{
-	list-style-type: none;
-}
-li{
-	margin-bottom: 1rem;
-	/*width: fit-content;*/
 }
 div.d-inline-flex {
 	margin-bottom: 4px;
@@ -44,6 +14,12 @@ div.d-inline-flex {
 }
 .hull-title{
 	font-size: 16px;
+	font-weight: 700;
+	margin-bottom: 1rem;
+	white-space: nowrap;
+}
+.ctrl-pt-title{
+	font-size: 14px;
 	font-weight: 700;
 	margin-bottom: 1rem;
 	white-space: nowrap;
@@ -60,9 +36,9 @@ div[data-menu='2'] div{
 div.hull-capsule {
 	margin-left: 2rem;
 }
+div.ctrl-pt-capsule {
+	margin-left: 2rem;
+}
 label{
 	white-space: nowrap;
-}
-form > ul {
-	padding-left: 0px;
 }

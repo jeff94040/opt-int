@@ -5,387 +5,662 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OptInt Web App</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <!-- Main menu -->
-  <!--<span style="color: red;">UNDER CONSTRUCTION - DO NOT USE</span>-->
-  <fieldset>
-    <legend>Main menu</legend>
-    <select name="menu" id="menu">
-      <option value="">Select a process to run:</option>
-      <option value="1">Kelvin Wake</option>
-      <option value="2">Hull Optimization</option>
-      <option value="3">Resistance Predictions</option>
-    </select>
-  </fieldset>
-  <!-- Input files -->
-  <fieldset>
-    <legend>Input files</legend>
-    <form data-menu-1 data-menu="1" enctype="multipart/form-data" action="/upload" method="post" style="display:none">
-      <table>
-        <tr>
-          <td>open strut. geom. (unit 30): </td>
-          <td>testit.stg</td>
-          <td> | <a href='/view/testit.stg'>view</a></td>
-          <td> | <a href='/download/testit.stg'>download</a></td>
-          <td> | <%=stg.age%></td>
-          <td> | <input type='file' name='stg' accept='.stg'></td>
-          <td class="successful"><%=stg.uploaded ? ' | upload successful' : ''%></td>
-        </tr>
-        <tr>
-          <td>base data: </td>
-          <td>testit.xvf</td>
-          <td> | <a href='/view/testit.xvf'>view</a></td>
-          <td> | <a href='/download/testit.xvf'>download</a></td>
-          <td> | <%=xvf.age%></td>
-          <td> | <input type='file' name='xvf' accept='.xvf'></td>
-          <td class='successful'><%=xvf.uploaded ? ' | upload successful' : ''%></td>
-        </tr>
+<body class="bg-light">
+
+  <!-- Bootstrapped main menu -->
+  <div class="container-fluid mt-3">
+    <div class="d-inline-flex">
+      <select class="form-select" id="menu">
+        <option value="0">Select a process to run:</option>
+        <option value="1">Kelvin Wake</option>
+        <option value="2">Hull Optimization</option>
+        <option value="3">Resistance Predictions</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Files table container -->
+  <div class="container-fluid mt-3" data-menu="1,2,3" style="display: none;">
+    <div class="container-title" data-menu="1">Kelvin Wake Files</div>
+    <div class="container-title" data-menu="2">Hull Optimization Files</div>
+    <div class="container-title" data-menu="3">Resistance Prediction Files</div>
+
+    <form enctype="multipart/form-data" action="/upload" method="post">
+    
+      <table class="table table-hover table-sm align-middle">
+        <caption>
+          <!--<button class="btn btn-secondary btn-sm">Upload Input File/s</button>-->
+          <input class="btn btn-secondary btn-sm" type="submit" value="Upload Input File/s">
+        </caption>
+        <thead>
+          <tr>
+            <td>File Type</td>
+            <td>Filename</td>
+            <td>Description</td>
+            <td>View File</td>
+            <td>Download File</td>
+            <td>Last Modified</td>
+            <td>Upload New File</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-menu="2,3">
+            <td>input</td>
+            <td>testit.shp</td>
+            <td>open hull shape (unit 32)</td>
+            <td><a href='/view/testit.shp'>view</a></td>
+            <td><a href='/download/testit.shp'>download</a></td>
+            <td><%=shp.age%></td>
+            <td><input class="form-control form-control-sm" type='file' name='shp' accept='.shp'></td>
+          </tr>
+          <tr data-menu="1,2">
+            <td>input</td>
+            <td>testit.stg</td>
+            <td>open strut. geom. (unit 30)</td>
+            <td><a href='/view/testit.stg'>view</a></td>
+            <td><a href='/download/testit.stg'>download</a></td>
+            <td><%=stg.age%></td>
+            <td><input class="form-control form-control-sm" type="file" name="stg" accept=".stg"></td>
+          </tr>
+          <tr data-menu="3">
+            <td>input</td>
+            <td>testit.vvf</td>
+            <td>vv data file</td>
+            <td><a href='/view/testit.vvf'>view</a></td>
+            <td><a href='/download/testit.vvf'>download</a></td>
+            <td><%=vvf.age%></td>
+            <td><input class="form-control form-control-sm" type='file' name='vvf' accept='.vvf'></td>
+          </tr>
+          <tr data-menu="2">
+            <td>input</td>
+            <td>testit.wav</td>
+            <td>open wave spectra input file - (unit 31)</td>
+            <td><a href='/view/testit.wav'>view</a></td>
+            <td><a href='/download/testit.wav'>download</a></td>
+            <td><%=wav.age%></td>
+            <td><input class="form-control form-control-sm" type='file' name='wav' accept='.wav'></td>
+          </tr>
+          <tr data-menu="1,2,3">
+            <td>input</td>
+            <td>testit.xvf</td>
+            <td>base data</td>
+            <td><a href='/view/testit.xvf'>view</a></td>
+            <td><a href='/download/testit.xvf'>download</a></td>
+            <td><%=xvf.age%></td>
+            <td><input class="form-control form-control-sm" type="file" name="xvf" accept=".xvf"></td>
+          </tr>
+          <tr data-menu="1">
+            <td>output</td>
+            <td>fort41</td>
+            <td>fort41</td>
+            <td><a href='/view/FORT41'>view</a></td>
+            <td><a href='/download/FORT41'>download</a></td>
+            <td><%=FORT41.age%></td>
+            <td></td>
+          </tr>
+          <tr data-menu="2">
+            <td>output</td>
+            <td>testit.hlg</td>
+            <td>submerged shape output (unit 32): </td>
+            <td><a href='/view/testit.hlg'>view</a></td>
+            <td><a href='/download/testit.hlg'>download</a></td>
+            <td><%=hlg.age%></td>
+            <td></td>
+          </tr>  
+          <tr data-menu="1">
+            <td>output</td>
+            <td>testit.op1</td>
+            <td>main output (unit 2)</td>
+            <td><a href='/view/testit.op1'>view</a></td>
+            <td><a href='/download/testit.op1'>download</a></td>
+            <td><%=op1.age%></td>
+            <td></td>
+          </tr>
+          <tr data-menu="2">
+            <td>output</td>
+            <td>testit.op2</td>
+            <td>main optjm output (unit 2)</td>
+            <td><a href='/view/testit.op2'>view</a></td>
+            <td><a href='/download/testit.op2'>download</a></td>
+            <td><%=op2.age%></td>
+            <td></td>
+          </tr>
+          <tr data-menu="3">
+            <td>output</td>
+            <td>testit.op3</td>
+            <td>main output (unit 2)</td>
+            <td><a href='/view/testit.op3'>view</a></td>
+            <td><a href='/download/testit.op3'>download</a></td>
+            <td><%=op3.age%></td>
+            <td></td>
+          </tr>
+          <tr data-menu="3">
+            <td>output</td>
+            <td>testit.op4</td>
+            <td>condensed open summary (unit 7)</td>
+            <td><a href='/view/testit.op4'>view</a></td>
+            <td><a href='/download/testit.op4'>download</a></td>
+            <td><%=op4.age%></td>
+            <td></td>
+          </tr>
+          <tr data-menu="1">
+            <td>output</td>
+            <td>testit.wav</td>
+            <td>wave-data output (unit 31)</td>
+            <td><a href='/view/testit.wav'>view</a></td>
+            <td><a href='/download/testit.wav' download="">download</a></td>
+            <td><%=wav.age%></td>
+            <td></td>
+          </tr>
+          <tr data-menu="1">
+            <td>output</td>
+            <td>testit.wav.ssv</td>
+            <td>testit.wav with space separated values</td>
+            <td></td>
+            <td><a href='/download/testit.wav.ssv' download="">download</a></td>
+            <td><%=wav.age%></td>
+            <td></td>
+          </tr>   
+          <tr data-menu="3">
+            <td>output</td>
+            <td>testit.pl1</td>
+            <td>plot data 1</td>
+            <td><a href='/view/testit.pl1'>view</a></td>
+            <td><a href='/download/testit.pl1'>download</a></td>
+            <td><%=pl1.age%></td>
+            <td></td>
+          </tr>
+          <tr data-menu="3">
+            <td>output</td>
+            <td>testit.pl2</td>
+            <td>plot data 2</td>
+            <td><a href='/view/testit.pl2'>view</a></td>
+            <td><a href='/download/testit.pl2'>download</a></td>
+            <td><%=pl2.age%></td>
+            <td></td>
+          </tr>
+          <tr data-menu="3">
+            <td>output</td>
+            <td>testit.pl3</td>
+            <td>plot data 3</td>
+            <td><a href='/view/testit.pl3'>view</a></td>
+            <td><a href='/download/testit.pl3'>download</a></td>
+            <td><%=pl3.age%></td>
+            <td></td>
+          </tr>
+          <tr data-menu="3">
+            <td>output</td>
+            <td>testit.pl4</td>
+            <td>plot data 4</td>
+            <td><a href='/view/testit.pl4'>view</a></td>
+            <td><a href='/download/testit.pl4'>download</a></td>
+            <td><%=pl4.age%></td>
+            <td></td>
+          </tr>
+          <tr data-menu="3">
+            <td>output</td>
+            <td>testit.pl5</td>
+            <td>plot data 5</td>
+            <td><a href='/view/testit.pl5'>view</a></td>
+            <td><a href='/download/testit.pl5'>download</a></td>
+            <td><%=pl5.age%></td>
+            <td></td>
+          </tr> 
+          <tr data-menu="1,2,3">
+            <td>output</td>
+            <td>terminal-output.txt</td>
+            <td>terminal output</td>
+            <td><a href='/view/terminal-output.txt'>view</a></td>
+            <td><a href='/download/terminal-output.txt'>download</a></td>
+            <td><%=out.age%></td>
+            <td></td>
+          </tr>
+        </tbody>
       </table>
-      <input type="submit" value="Upload File/s">
-      <!--<button>Upload File's</button>-->
     </form>
-    <form data-menu-2 data-menu="2" enctype="multipart/form-data" action="/upload" method="post" style="display:none">
-      <table>
-        <tr>
-          <td>open hull shape (unit 32): </td>
-          <td>testit.shp</td>
-          <td> | <a href='/view/testit.shp'>view</a></td>
-          <td> | <a href='/download/testit.shp'>download</a></td>
-          <td> | <%=shp.age%></td>
-          <td> | <input type='file' name='shp' accept='.shp'></td>
-          <td class="successful"><%=shp.uploaded ? ' | upload successful' : ''%></td>
-        </tr>
-        <tr>
-          <td>open strut. geom. (unit 30): </td>
-          <td>testit.stg</td>
-          <td> | <a href='/view/testit.stg'>view</a></td>
-          <td> | <a href='/download/testit.stg'>download</a></td>
-          <td> | <%=stg.age%></td>
-          <td> | <input type='file' name='stg' accept='.stg'></td>
-          <td class="successful"><%=stg.uploaded ? ' | upload successful' : ''%></td>
-        </tr>
-        <tr>
-          <td>open wave spectra input file - (unit 31): </td>
-          <td>testit.wav</td>
-          <td> | <a href='/view/testit.wav'>view</a></td>
-          <td> | <a href='/download/testit.wav'>download</a></td>
-          <td> | <%=wav.age%></td>
-          <td> | <input type='file' name='wav' accept='.wav'></td>
-          <td class='successful'><%=wav.uploaded ? ' | upload successful' : ''%></td>
-        </tr>
-        <tr>
-          <td>base data: </td>
-          <td>testit.xvf</td>
-          <td> | <a href='/view/testit.xvf'>view</a></td>
-          <td> | <a href='/download/testit.xvf'>download</a></td>
-          <td> | <%=xvf.age%></td>
-          <td> | <input type='file' name='xvf' accept='.xvf'></td>
-          <td class='successful'><%=xvf.uploaded ? ' | upload successful' : ''%></td>
-        </tr>
-      </table>
+  </div>
+
+  <!-- Kelvin wake (option 1) sequence input container -->
+  <div class="container-fluid mt-3 mb-3" data-menu="1" style="display: none;">
+
+    <form action='/run' method='post'>
+    
+      <div class="container-title">Kelvin Wake Vector Data</div>
+    
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-vvf="0">
+        <label class="form-label">number of hulls</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-vvf="1">
+        <label class="form-label">y coordinate of hull centerline</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-vvf="2">
+        <label class="form-label">optimization velocity (knots)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-vvf="3">
+        <label class="form-label">Overall ship length (for spectral range)</label>
+      </div>
+      <div>
+        <!--<button class="btn btn-primary btn-sm mt-2" type="button">Run Kelvin Wake Process</button>-->
+        <input class="btn btn-primary btn-sm mt-2" type="submit" value="Run Kelvin Wake Process">
+      </div>
     </form>
-    <form data-menu-3 data-menu="3" enctype="multipart/form-data" action="/upload" method="post" style="display:none">
-      <table>
-        <tr>
-          <td>open hull shape (unit 32): </td>
-          <td>testit.shp</td>
-          <td> | <a href='/view/testit.shp'>view</a></td>
-          <td> | <a href='/download/testit.shp'>download</a></td>
-          <td> | <%=shp.age%></td>
-          <td> | <input type='file' name='shp' accept='.shp'></td>
-          <td class="successful"><%=shp.uploaded ? ' | upload successful' : ''%></td>
-        </tr>
-        <tr>
-          <td>base data: </td>
-          <td>testit.xvf</td>
-          <td> | <a href='/view/testit.xvf'>view</a></td>
-          <td> | <a href='/download/testit.xvf'>download</a></td>
-          <td> | <%=xvf.age%></td>
-          <td> | <input type='file' name='xvf' accept='.xvf'></td>
-          <td class='successful'><%=xvf.uploaded ? ' | upload successful' : ''%></td>
-        </tr>
-        <tr>
-          <td>vv data file: </td>
-          <td>testit.vvf</td>
-          <td> | <a href='/view/testit.vvf'>view</a></td>
-          <td> | <a href='/download/testit.vvf'>download</a></td>
-          <td> | <%=vvf.age%></td>
-          <td> | <input type='file' name='vvf' accept='.vvf'></td>
-          <td class='successful'> <%=vvf.uploaded ? ' | upload successful' : ''%></td>
-        </tr>
-      </table>
-      <input type="submit" value="Upload File/s">
-      <!--<button>Upload File/s</button>-->
-    </form>    
-  </fieldset>
-  <!-- Data edits -->
-  <fieldset>
-    <legend>Edit input data</legend>
-    <form data-menu-1 data-menu="1" action='/run' method='post' style="display:none">
-      <table>
-        <tr style="font-weight: bold;"><td>testit.xvf - edit vector data</td><td>current value</td></tr>
-        <tr><td>1. number of hulls: </td><td><input name="xvf" data-xvf="0"></td></tr>
-        <tr><td>2. y coordinate of hull centerline: </td><td><input name="xvf" data-xvf="1"></td></tr>
-        <tr><td>3. optimization velocity (knots): </td><td><input name="xvf" data-xvf="2"></td></tr>
-        <tr><td>4. overall ship length (for spectral range): </td><td><input name="xvf" data-xvf="3"></td></tr>
-      </table>
-      <input type="submit" value="Run Kelvin Wake Process">
-      <!--<button>Run Kelvin Wake Process</button>-->
+  </div>
+
+  <!-- Hull optimization (option 2) sequence input container -->
+  <div class="container-fluid mt-3 mb-3" data-menu="2" style="display: none;">
+    <form action="/run" method="post">
+      <div class="container-title">Hull Geometry</div>
+      <div class="form-floating">
+        <input type="text" class="form-control" name="sequence" required>
+        <label>submerged hull geometry file label</label>
+      </div>
+      <div class="form-floating">
+        <select class="form-select" id="hull-count" required>
+          <option></option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+        </select>   
+        <label>number of hull bodies</label>
+      </div>
+      <div id="hulls">
+        <!-- to be populated dynamically -->
+      </div>
+      <div class="form-floating">
+        <input type="text" class="form-control" name="sequence" data-xvf="42" required>
+        <label>longitudinal center of bouyancy</label>
+      </div>
+      <div class="form-floating">
+        <input type="text" class="form-control" name="sequence" data-xvf="43" required>
+        <label>ship displacement (long tons)</label>
+      </div>
+      <div class="form-floating">
+        <input type="text" class="form-control" name="sequence" data-xvf="44" required>
+        <label>opt. param. (1=drag, 2=height, 3=slope)</label>
+      </div>
+      <div class="form-floating">
+        <input type="text" class="form-control" name="sequence" data-xvf="45" required>
+        <label>reasonablenes factor alpha (0&lt;alpha&lt;1)</label>
+      </div>
+      <div>
+        <!--<button class="btn btn-primary btn-sm mt-2" type="button">Run Hull Optimization Process</button>-->
+        <input class="btn btn-primary btn-sm mt-2" type="submit" value="Run Hull Optimization Process">
+      </div>
     </form>
-    <form data-menu-2 data-menu="2" action="/run" method="post" style="display:none;">
-      <table id='option-2-table'>
-        <tr><td>submerged hull geometry file label: </td><td><input type="text" name="sequence" required></td></tr>
-        <tr>
-          <td>number of hull bodies: </td>
-          <td>
-            <select id="hull-body-count" required>
-              <option></option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-            </select>
-          </td>
-        </tr>
-      </table>
-      <table id='hull-bodies-table'>
-        <!-- populated dynamically by JS -->
-      </table>
-      <input type="submit" value="Run Hull Optimization Process">
+  </div>
+
+  <!-- Resistance predictions (option 3) sequence input container -->
+  <div class="container-fluid mt-3 mb-3" data-menu="3" style="display: none;">
+
+    <form action='/run' method='post'>
+    
+      <div class="container-title">Resistance Predictions Vector Data</div>
+    
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="0">
+        <label class="form-label">Number of hulls</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="1">
+        <label class="form-label">Y coordinate of hull centerline</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="2">
+        <label class="form-label">Optimization velocity (knots)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="3">
+        <label class="form-label">Overall ship length (for spectral range)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="4">
+        <label class="form-label">char. length of one hull (not used)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="5">
+        <label class="form-label">wetted area of one hull (")</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="6">
+        <label class="form-label">number of struts per side (for spray)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="7">
+        <label class="form-label">no. of velocities to run (1 if first pass)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="8">
+        <label class="form-label">scale factor</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="9">
+        <label class="form-label">overall efficiency (ehp/bhp)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="10">
+        <label class="form-label">spray drag flag (1 if no spray drag)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="11">
+        <label class="form-label">option flag for strut drag coeff.</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="12">
+        <label class="form-label">option flag for lower hull drag coeff.</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="21">
+        <label class="form-label">prop guard planform area (spg)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="22">
+        <label class="form-label">prop guard chord (pgchrd)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="23">
+        <label class="form-label">prop guard thickness/chord (pgtcr)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="24">
+        <label class="form-label">canard planform area (sc)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="25">
+        <label class="form-label">canard chord (cchrd)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="26">
+        <label class="form-label">canard thickness/chord (ctcr)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="27">
+        <label class="form-label">stabilizer planform area (ss)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="28">
+        <label class="form-label">stabilizer chord (schrd)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="29">
+        <label class="form-label">stabilizer thickness/chord (stcr)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="30">
+        <label class="form-label">rudder planform area (sr)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="31">
+        <label class="form-label">rudder chord (rchrd)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="32">
+        <label class="form-label">rudder thickness/chord (rtcr)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="33">
+        <label class="form-label">strut tip chord (ctst)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="34">
+        <label class="form-label">strut root chord (crst)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="35">
+        <label class="form-label">strut span (stspan)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="36">
+        <label class="form-label">strut thickness/chord (sttcr)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="37">
+        <label class="form-label">length of lower hull (llh) (not used)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="38">
+        <label class="form-label">diameter of lower hull ? (dhull)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="39">
+        <label class="form-label">strut wetted surface area (swet)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="40">
+        <label class="form-label">lower hull wetted surface area (hwet)</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="xvf" data-xvf="41">
+        <label class="form-label">frontal area (afront)</label>
+      </div>
+
+      <div class="container-title mt-3">Resistance Predictions Velocity Data</div>
+      
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="0">
+        <label class="form-label"># of velocities</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="1">
+        <label class="form-label">velocity #1</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="2">
+        <label class="form-label">velocity #2</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="3">
+        <label class="form-label">velocity #3</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="4">
+        <label class="form-label">velocity #4</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="5">
+        <label class="form-label">velocity #5</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="6">
+        <label class="form-label">velocity #6</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="7">
+        <label class="form-label">velocity #7</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="8">
+        <label class="form-label">velocity #8</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="9">
+        <label class="form-label">velocity #9</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="10">
+        <label class="form-label">velocity #10</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="11">
+        <label class="form-label">velocity #11</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="12">
+        <label class="form-label">velocity #12</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="13">
+        <label class="form-label">velocity #13</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="14">
+        <label class="form-label">velocity #14</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="15">
+        <label class="form-label">velocity #15</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="16">
+        <label class="form-label">velocity #16</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="17">
+        <label class="form-label">velocity #17</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="18">
+        <label class="form-label">velocity #18</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="19">
+        <label class="form-label">velocity #19</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="20">
+        <label class="form-label">velocity #20</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="21">
+        <label class="form-label">velocity #21</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="22">
+        <label class="form-label">velocity #22</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="23">
+        <label class="form-label">velocity #23</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="24">
+        <label class="form-label">velocity #24</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="25">
+        <label class="form-label">velocity #25</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="26">
+        <label class="form-label">velocity #26</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="27">
+        <label class="form-label">velocity #27</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="28">
+        <label class="form-label">velocity #28</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="29">
+        <label class="form-label">velocity #29</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="30">
+        <label class="form-label">velocity #30</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="31">
+        <label class="form-label">velocity #31</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="32">
+        <label class="form-label">velocity #32</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="33">
+        <label class="form-label">velocity #33</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="34">
+        <label class="form-label">velocity #34</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="35">
+        <label class="form-label">velocity #35</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="36">
+        <label class="form-label">velocity #36</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="37">
+        <label class="form-label">velocity #37</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="38">
+        <label class="form-label">velocity #38</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="39">
+        <label class="form-label">velocity #39</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="40">
+        <label class="form-label">velocity #40</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="41">
+        <label class="form-label">velocity #41</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="42">
+        <label class="form-label">velocity #42</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="43">
+        <label class="form-label">velocity #43</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="44">
+        <label class="form-label">velocity #44</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="45">
+        <label class="form-label">velocity #45</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="46">
+        <label class="form-label">velocity #46</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="47">
+        <label class="form-label">velocity #47</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="48">
+        <label class="form-label">velocity #48</label>
+      </div>
+      <div class="d-inline-flex form-floating">
+        <input type="text" class="form-control" name="vvf" data-vvf="49">
+        <label class="form-label">velocity #49</label>
+      </div>
+      <div>
+        <!--<button class="btn btn-primary btn-sm mt-2" type="button">Run Resistance Predictions Process</button>-->
+        <input class="btn btn-primary btn-sm mt-2" type="submit" value="Run Resistance Predictions Process">
+      </div>
     </form>
-    <form data-menu-3 data-menu="3" action='/run' method='post' style="display:none">
-      <table>
-        <tr style="font-weight: bold;"><td>testit.xvf - edit vector data</td><td>current value</td></tr>
-        <tr><td>1. number of hulls: </td><td><input name="xvf" data-xvf="0"></td></tr>
-        <tr><td>2. y coordinate of hull centerline: </td><td><input name="xvf" data-xvf="1"></td></tr>
-        <tr><td>3. optimization velocity (knots): </td><td><input name="xvf" data-xvf="2"></td></tr>
-        <tr><td>4. overall ship length (for spectral range): </td><td><input name="xvf" data-xvf="3"></td></tr>
-        <tr><td>5. char. length of one hull (not used): </td><td><input name="xvf" data-xvf="4"></td></tr>
-        <tr><td>6. wetted area of one hull ("): </td><td><input name="xvf" data-xvf="5"></td></tr>
-        <tr><td>7. number of struts per side (for spray): </td><td><input name="xvf" data-xvf="6"></td></tr>
-        <tr><td>8. no. of velocities to run (1 if first pass): </td><td><input name="xvf" data-xvf="7"></td></tr>
-        <tr><td>9. scale factor: </td><td><input name="xvf" data-xvf="8"></td></tr>
-        <tr><td>10. overall efficiency (ehp/bhp): </td><td><input name="xvf" data-xvf="9"></td></tr>
-        <tr><td>11. spray drag flag (1 if no spray drag): </td><td><input name="xvf" data-xvf="10"></td></tr>
-        <tr><td>12. option flag for strut drag coeff.: </td><td><input name="xvf" data-xvf="11"></td></tr>
-        <tr><td>13. option flag for lower hull drag coeff.: </td><td><input name="xvf" data-xvf="12"></td></tr>
-        <tr><td>...</td><td></td><td></td></tr>
-        <tr><td>22. prop guard planform area (spg): </td><td><input name="xvf" data-xvf="21"></td></tr>
-        <tr><td>23. prop guard chord (pgchrd): </td><td><input name="xvf" data-xvf="22"></td></tr>
-        <tr><td>24. prop guard thickness/chord (pgtcr): </td><td><input name="xvf" data-xvf="23"></td></tr>
-        <tr><td>25. canard planform area (sc): </td><td><input name="xvf" data-xvf="24"></td></tr>
-        <tr><td>26. canard chord (cchrd): </td><td><input name="xvf" data-xvf="25"></td></tr>
-        <tr><td>27. canard thickness/chord (ctcr): </td><td><input name="xvf" data-xvf="26"></td></tr>
-        <tr><td>28. stabilizer planform area (ss): </td><td><input name="xvf" data-xvf="27"></td></tr>
-        <tr><td>29. stabilizer chord (schrd): </td><td><input name="xvf" data-xvf="28"></td></tr>
-        <tr><td>30. stabilizer thickness/chord (stcr): </td><td><input name="xvf" data-xvf="29"></td></tr>
-        <tr><td>31. rudder planform area (sr): </td><td><input name="xvf" data-xvf="30"></td></tr>
-        <tr><td>32. rudder chord (rchrd): </td><td><input name="xvf" data-xvf="31"></td></tr>
-        <tr><td>33. rudder thickness/chord (rtcr): </td><td><input name="xvf" data-xvf="32"></td></tr>
-        <tr><td>34. strut tip chord (ctst): </td><td><input name="xvf" data-xvf="33"></td></tr>
-        <tr><td>35. strut root chord (crst): </td><td><input name="xvf" data-xvf="34"></td></tr>
-        <tr><td>36. strut span (stspan): </td><td><input name="xvf" data-xvf="35"></td></tr>
-        <tr><td>37. strut thickness/chord (sttcr): </td><td><input name="xvf" data-xvf="36"></td></tr>
-        <tr><td>38. length of lower hull (llh) (not used): </td><td><input name="xvf" data-xvf="37"></td></tr>
-        <tr><td>39. diameter of lower hull ? (dhull) ("): </td><td><input name="xvf" data-xvf="38"></td></tr>
-        <tr><td>40. strut wetted surface area (swet) ("): </td><td><input name="xvf" data-xvf="39"></td></tr>
-        <tr><td>41. lower hull wetted surface area (hwet) ("): </td><td><input name="xvf" data-xvf="40"></td></tr>
-        <tr><td>42. frontal area (afront): </td><td><input name="xvf" data-xvf="41"></td></tr>
-        <tr><td>...</td><td></td><td></td></tr>
-        <tr style="font-weight: bold;"><td>testit.vvf - edit velocity data</td><td>current Value</td></tr>
-        <tr><td># of velocities: </td><td><input name="vvf" data-vvf="0"></td></tr>
-        <tr><td>velocity #1: </td><td><input name="vvf" data-vvf="1"></td></tr>
-        <tr><td>velocity #2: </td><td><input name="vvf" data-vvf="2"></td></tr>
-        <tr><td>velocity #3: </td><td><input name="vvf" data-vvf="3"></td></tr>
-        <tr><td>velocity #4: </td><td><input name="vvf" data-vvf="4"></td></tr>
-        <tr><td>velocity #5: </td><td><input name="vvf" data-vvf="5"></td></tr>
-        <tr><td>velocity #6: </td><td><input name="vvf" data-vvf="6"></td></tr>
-        <tr><td>velocity #7: </td><td><input name="vvf" data-vvf="7"></td></tr>
-        <tr><td>velocity #8: </td><td><input name="vvf" data-vvf="8"></td></tr>
-        <tr><td>velocity #9: </td><td><input name="vvf" data-vvf="9"></td></tr>
-        <tr><td>velocity #10: </td><td><input name="vvf" data-vvf="10"></td></tr>
-        <tr><td>velocity #11: </td><td><input name="vvf" data-vvf="11"></td></tr>
-        <tr><td>velocity #12: </td><td><input name="vvf" data-vvf="12"></td></tr>
-        <tr><td>velocity #13: </td><td><input name="vvf" data-vvf="13"></td></tr>
-        <tr><td>velocity #14: </td><td><input name="vvf" data-vvf="14"></td></tr>
-        <tr><td>velocity #15: </td><td><input name="vvf" data-vvf="15"></td></tr>
-        <tr><td>velocity #16: </td><td><input name="vvf" data-vvf="16"></td></tr>
-        <tr><td>velocity #17: </td><td><input name="vvf" data-vvf="17"></td></tr>
-        <tr><td>velocity #18: </td><td><input name="vvf" data-vvf="18"></td></tr>
-        <tr><td>velocity #19: </td><td><input name="vvf" data-vvf="19"></td></tr>
-        <tr><td>velocity #20: </td><td><input name="vvf" data-vvf="20"></td></tr>
-        <tr><td>velocity #21: </td><td><input name="vvf" data-vvf="21"></td></tr>
-        <tr><td>velocity #22: </td><td><input name="vvf" data-vvf="22"></td></tr>
-        <tr><td>velocity #23: </td><td><input name="vvf" data-vvf="23"></td></tr>
-        <tr><td>velocity #24: </td><td><input name="vvf" data-vvf="24"></td></tr>
-        <tr><td>velocity #25: </td><td><input name="vvf" data-vvf="25"></td></tr>
-        <tr><td>velocity #26: </td><td><input name="vvf" data-vvf="26"></td></tr>
-        <tr><td>velocity #27: </td><td><input name="vvf" data-vvf="27"></td></tr>
-        <tr><td>velocity #28: </td><td><input name="vvf" data-vvf="28"></td></tr>
-        <tr><td>velocity #29: </td><td><input name="vvf" data-vvf="29"></td></tr>
-        <tr><td>velocity #30: </td><td><input name="vvf" data-vvf="30"></td></tr>
-        <tr><td>velocity #31: </td><td><input name="vvf" data-vvf="31"></td></tr>
-        <tr><td>velocity #32: </td><td><input name="vvf" data-vvf="32"></td></tr>
-        <tr><td>velocity #33: </td><td><input name="vvf" data-vvf="33"></td></tr>
-        <tr><td>velocity #34: </td><td><input name="vvf" data-vvf="34"></td></tr>
-        <tr><td>velocity #35: </td><td><input name="vvf" data-vvf="35"></td></tr>
-        <tr><td>velocity #36: </td><td><input name="vvf" data-vvf="36"></td></tr>
-        <tr><td>velocity #37: </td><td><input name="vvf" data-vvf="37"></td></tr>
-        <tr><td>velocity #38: </td><td><input name="vvf" data-vvf="38"></td></tr>
-        <tr><td>velocity #39: </td><td><input name="vvf" data-vvf="39"></td></tr>
-        <tr><td>velocity #40: </td><td><input name="vvf" data-vvf="40"></td></tr>
-        <tr><td>velocity #41: </td><td><input name="vvf" data-vvf="41"></td></tr>
-        <tr><td>velocity #42: </td><td><input name="vvf" data-vvf="42"></td></tr>
-        <tr><td>velocity #43: </td><td><input name="vvf" data-vvf="43"></td></tr>
-        <tr><td>velocity #44: </td><td><input name="vvf" data-vvf="44"></td></tr>
-        <tr><td>velocity #45: </td><td><input name="vvf" data-vvf="45"></td></tr>
-        <tr><td>velocity #46: </td><td><input name="vvf" data-vvf="46"></td></tr>
-        <tr><td>velocity #47: </td><td><input name="vvf" data-vvf="47"></td></tr>
-        <tr><td>velocity #48: </td><td><input name="vvf" data-vvf="48"></td></tr>
-        <tr><td>velocity #49: </td><td><input name="vvf" data-vvf="49"></td></tr>
-      </table>
-      <input type="submit" value="Run Resistance Predictions Process">
-      <!--<button>Run Resistance Predictions Process</button>-->
-    </form>
-  </fieldset>
-  <!-- Output files -->
-  <fieldset>
-    <legend>Output files</legend>
-    <table data-menu-1 data-menu="1" style="display:none">
-      <tr>
-        <td>wave-data output (unit 31): </td>
-        <td>testit.wav [<a href='/download/testit.wav.ssv' download="">.wav.ssv</a>]</td>
-        <td> | <a href='/view/testit.wav'>view</a></td>
-        <td> | <a href='/download/testit.wav' download="">download</a></td>
-        <td> | <%=wav.age%></td>
-      </tr>
-      <tr>
-        <td>main output (unit 2): </td>
-        <td>testit.op1</td>
-        <td> | <a href='/view/testit.op1'>view</a></td>
-        <td> | <a href='/download/testit.op1'>download</a></td>
-        <td> | <%=op1.age%></td>
-      </tr>
-      <tr>
-        <td>fort41: </td>
-        <td>fort41</td>
-        <td> | <a href='/view/FORT41'>view</a></td>
-        <td> | <a href='/download/FORT41'>download</a></td>
-        <td> | <%=FORT41.age%></td>
-      </tr>
-      <tr>
-        <td>terminal output: </td>
-        <td>terminal-output.txt</td>
-        <td> | <a href='/view/terminal-output.txt'>view</a></td>
-        <td> | <a href='/download/terminal-output.txt'>download</a></td>
-        <td> | <%=out.age%></td>
-      </tr>
-    </table>
-    <table data-menu-2 data-menu="2" style="display:none">
-      <tr>
-        <td>main optjm output (unit 2): </td>
-        <td>testit.op2</td>
-        <td> | <a href='/view/testit.op2'>view</a></td>
-        <td> | <a href='/download/testit.op2'>download</a></td>
-        <td> | <%=op2.age%></td>
-      </tr>
-      <tr>
-        <td>submerged shape output (unit 32): </td>
-        <td>testit.hlg</td>
-        <td> | <a href='/view/testit.hlg'>view</a></td>
-        <td> | <a href='/download/testit.hlg'>download</a></td>
-        <td> | <%=hlg.age%></td>
-      </tr>
-      <tr>
-        <td>terminal output: </td>
-        <td>terminal-output.txt</td>
-        <td> | <a href='/view/terminal-output.txt'>view</a></td>
-        <td> | <a href='/download/terminal-output.txt'>download</a></td>
-        <td> | <%=out.age%></td>
-      </tr>
-    </table>
-    <table data-menu-3 data-menu="3" style="display:none">
-      <tr>
-        <td>main output (unit 2): </td>
-        <td>testit.op3</td>
-        <td> | <a href='/view/testit.op3'>view</a></td>
-        <td> | <a href='/download/testit.op3'>download</a></td>
-        <td> | <%=op3.age%></td>
-      </tr>
-      <tr>
-        <td>condensed open summary (unit 7): </td>
-        <td>testit.op4</td>
-        <td> | <a href='/view/testit.op4'>view</a></td>
-        <td> | <a href='/download/testit.op4'>download</a></td>
-        <td> | <%=op4.age%></td>
-      </tr>
-      <tr>
-        <td>plot data 1: </td>
-        <td>testit.pl1</td>
-        <td> | <a href='/view/testit.pl1'>view</a></td>
-        <td> | <a href='/download/testit.pl1'>download</a></td>
-        <td> | <%=pl1.age%></td>
-      </tr>
-      <tr>
-        <td>plot data 2: </td>
-        <td>testit.pl2</td>
-        <td> | <a href='/view/testit.pl2'>view</a></td>
-        <td> | <a href='/download/testit.pl2'>download</a></td>
-        <td> | <%=pl2.age%></td>
-      </tr>
-      <tr>
-        <td>plot data 3: </td>
-        <td>testit.pl3</td>
-        <td> | <a href='/view/testit.pl3'>view</a></td>
-        <td> | <a href='/download/testit.pl3'>download</a></td>
-        <td> | <%=pl3.age%></td>
-      </tr>
-      <tr>
-        <td>plot data 4: </td>
-        <td>testit.pl4</td>
-        <td> | <a href='/view/testit.pl4'>view</a></td>
-        <td> | <a href='/download/testit.pl4'>download</a></td>
-        <td> | <%=pl4.age%></td>
-      </tr>
-      <tr>
-        <td>plot data 5: </td>
-        <td>testit.pl5</td>
-        <td> | <a href='/view/testit.pl5'>view</a></td>
-        <td> | <a href='/download/testit.pl5'>download</a></td>
-        <td> | <%=pl5.age%></td>
-      </tr>
-      <tr>
-        <td>terminal output: </td>
-        <td>terminal-output.txt</td>
-        <td> | <a href='/view/terminal-output.txt'>view</a></td>
-        <td> | <a href='/download/terminal-output.txt'>download</a></td>
-        <td> | <%=out.age%></td>
-      </tr>
-    </table>
-  </fieldset>  
+  </div>
+
   <script>
     const previous_menu = '<%=menu%>';
-    
-    // Populate .xvf content
-    const xvf_content_arr = '<%=xvf.content%>'.split(',');
-    document.querySelectorAll('[data-xvf]').forEach( (elem) => {
-      elem.value = Number(xvf_content_arr[elem.getAttribute('data-xvf')]);
-    });
-
-    // Populate .vvf content
-    const vvf_content_arr = '<%=vvf.content%>'.split(',');
-    document.querySelectorAll('[data-vvf]').forEach( (elem) => {
-      elem.value = Number(vvf_content_arr[elem.getAttribute('data-vvf')]);
-    });
-
+    const xvf_content = '<%=xvf.content%>';
+    const vvf_content = '<%=vvf.content%>';
   </script>
   <script src="./index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 </body>
 </html>
